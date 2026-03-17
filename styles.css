@@ -1,3 +1,77 @@
+:root {
+    --primary: #292524;
+    --secondary: #44403B;
+    --tertiary: #161517;
+    --border-radius: 10px;
+}
+
+* {
+    color: white;
+}
+
+body {
+    display: flex;
+    background-color: var(--primary);
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+button {
+    background-color: var(--tertiary);
+    border: none;
+}
+
+#sidebar {
+    height: 100vh;
+    border-right: 1px solid var(--secondary);
+    width: 30vw;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: var(--secondary);
+}
+
 .note-card {
     border: 1px solid black;
+    border-radius: var(--border-radius);
+    padding: 5px;
+}
+
+.note-card:hover {
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+#note-display-div {
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+}
+
+#note-title {
+    height: 15vh;
+    padding-left: 10px;
+    font-size: 3rem;
+    background-color: var(--primary);
+    border: none;
+    border-bottom: 1px solid var(--secondary);
+}
+
+#note-body {
+    height: 70vh;
+    font-size: 1.2rem;
+    padding: 10px;
+    background-color: var(--primary);
+    border: none;
+}
+
+#create-new-note-btn {
+    position: fixed;
+    left: 21vw;
+    bottom: 15px;
+    height: 50px;
+    aspect-ratio: 1;
+    border-radius: var(--border-radius);
 }
