@@ -179,6 +179,75 @@ function saveNote(){
 createNewNoteBtn.addEventListener('click', createBlankNote);
 saveNoteBtn.addEventListener('click', createOrEdit);
 
+//search functionality
+const searchMenu = document.getElementById('search-menu');
+const closeSearchMenuBtn = document.getElementById('close-search-menu-btn');
+const searchBarEl = document.getElementById('search-bar');
+const searchResultsHolderEl = document.getElementById('search-results');
+
+let searchResults = [...notes]
+let debounceTimer;
+
+function openSearchMenu(){
+    searchBarEl.value = '';
+    displaySearchResults(searchResults, searchResultsHolderEl)
+    searchMenu.showModal();
+    searchBarEl.focus();
+}
+
+function closeSearchMenu(){
+    searchMenu.close();
+}
+
+
+
+function createMenuItem(fileObj){
+    const menuItem = document.createElement('div');
+    menuItem.classList.add('search-menu-item');
+    menuItem.innerHTML = `
+        <img src="assets/text-icon.svg" class ="search-result-img">
+        <p>${fileObj.title}</p>
+        <div class="date-container">
+            <img src="assets/date-icon.svg" class ="search-result-img">
+            <p>${fileObj.date}</p>
+        </div>
+    `
+
+    menuItem.addEventListener('click', () => {
+        loadNote(fileObj.id);
+        closeSearchMenu();
+    })
+    return menuItem;
+}
+
+function displaySearchResults(array, desiredOuputContainer){
+    array.forEach(item => {
+        desiredOuputContainer.appendChild(createMenuItem(item))
+    })
+}
+
+searchBarEl.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        searchResults = [];
+        searchResultsHolderEl.innerHTML = '';
+        notes.forEach(item => {
+            if(item.title.includes(e.target.value)){
+                searchResults.push(item)
+            }
+        });
+        console.log(searchResults);
+        displaySearchResults(searchResults, searchResultsHolderEl)
+    },300)
+})
+
+searchMenu.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape'){
+        closeSearchMenu()
+    }
+})
+closeSearchMenuBtn.addEventListener('click', closeSearchMenu);
+
 window.addEventListener('keydown', (e) => {
     //Save note with alt+s
     if(e.altKey && e.key === 's'){
@@ -209,6 +278,9 @@ window.addEventListener('keydown', (e) => {
             if(prevIndex < 0) return;
             loadNote(notes[prevIndex].id);
         }
+    } else if (e.altKey && e.key === 'd'){
+        e.preventDefault()
+        openSearchMenu()
     }
 })
 
@@ -218,5 +290,5 @@ displayAllNotesBtn.addEventListener('click', showAllNotes);
 
 window.addEventListener('keydown', (e) => {console.log(e.key)})
 noteTitleEl.value = '';
-noteBodyEl.value = '';
+noteBodyEl.value = `Press 'alt + n' to create a new note`;
 renderSidebarNoteCards()

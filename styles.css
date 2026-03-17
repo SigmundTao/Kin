@@ -31,11 +31,21 @@ button {
     background-color: var(--secondary);
 }
 
+#displaying-notes-container {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    height: 85%;
+}
+
 .note-card {
     border: 1px solid black;
     border-radius: var(--border-radius);
     padding: 5px;
     position: relative;
+    height: 20%;
 }
 
 .note-card:hover {
@@ -133,4 +143,51 @@ button {
 
 .selected-note {
     background-color: aqua;
+}
+
+#search-menu {
+    background-color: var(--primary);
+    border: 2px solid var(--tertiary);
+    width: 50vw;
+    padding: 15px;
+}
+
+#search-bar {
+    background-color: var(--primary);
+    width: 100%;
+    border: 1px solid var(--secondary);
+}
+
+#search-results {
+    height: 30vh;
+    width: 100%;
+    padding: 3px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.search-menu-item {
+    height: 15%;
+    border: 1px solid var(--secondary);
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-menu-item:hover {
+    background-color: var(--secondary);
+    cursor: pointer;
+}
+
+.search-result-img {
+    height: 80%;
+}
+
+.date-container {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
