@@ -26,10 +26,8 @@ button {
     height: 100vh;
     border-right: 1px solid var(--secondary);
     width: 30vw;
-    padding: 5px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
     background-color: var(--secondary);
 }
 
@@ -37,6 +35,7 @@ button {
     border: 1px solid black;
     border-radius: var(--border-radius);
     padding: 5px;
+    position: relative;
 }
 
 .note-card:hover {
@@ -74,4 +73,55 @@ button {
     height: 50px;
     aspect-ratio: 1;
     border-radius: var(--border-radius);
+}
+
+.note-card-bookmark {
+    height: 30%;
+    aspect-ratio: 1;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.bookmarked {
+    background-image: url(/assets/bookmark-filled.svg);
+}
+
+.unbookmarked {
+    background-image: url(/assets/bookmark-unfilled.svg);
+}
+
+#nav-bar {
+    list-style: none;
+    display: flex;
+    border: 3px solid blue;
+    height: 5%;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding: 3px;
+    gap: 3px;
+}
+
+.nav-item {
+    border: 1px solid green;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+}
+
+.nav-item:hover {
+    background-color: var(--tertiary);
+    cursor: pointer;
+}
+
+#bookmark-nav-item {
+    background-image: url(/assets/bookmark-unfilled.svg);
+    background-position: center;
+    background-size: contain;
 }

@@ -4,15 +4,36 @@ const noteTitleEl = document.getElementById('note-title');
 const noteBodyEl = document.getElementById('note-body');
 const sidebarEl = document.getElementById('sidebar');
 const saveNoteBtn = document.getElementById('save-note-btn');
+const displayingNotesContainerEl = document.getElementById('displaying-notes-container');
+const bookmarkNavBtn = document.getElementById('bookmark-nav-item');
+const displayAllNotesBtn = document.getElementById('all-notes-btn');
 
 const noteDisplayStates = ['Idle', 'Editing', 'Creating'];
 let currentNoteDisplayState = 'Idle';
 let currentNoteID = 0;
+let showingBookmarks = false;
 
 const notes = JSON.parse(localStorage.getItem('notes')) || [];
+let displayingNotes = [...notes]
 
 let idNum = notes.length > 0 ? Math.max(...notes.map(n => n.id)) + 1 : 1;
 
+function showBookmarkedNotes(){
+    showingBookmarks = true;
+    displayingNotes = [];
+    notes.forEach(note => {
+        if(note.bookmarked){
+            displayingNotes.push(note);
+        }
+    })
+    renderSidebarNoteCards()
+}
+
+function showAllNotes(){
+    displayingNotes = [...notes];
+    showingBookmarks = false;
+    renderSidebarNoteCards()
+}
 
 function updateNoteData(){
     localStorage.setItem('notes', JSON.stringify(notes));
@@ -33,13 +54,35 @@ function loadNote(id){
     currentNoteDisplayState = 'Editing'
 }
 
-function createSidebarNoteCard(title, date, containerEl, noteID){
+function createSidebarNoteCard(title, date, containerEl, noteID, bookmarked){
     const sidebarNoteCard = document.createElement('div');
     sidebarNoteCard.classList.add('note-card')
     sidebarNoteCard.innerHTML = `
         <h2>${title}</h2>
         <p>${date}</p>
     `;
+     
+    console.log(bookmarked, title);
+
+    const bookmark = document.createElement('div');
+    bookmark.classList.add('note-card-bookmark')
+    if(bookmarked){
+        bookmark.classList.add('bookmarked')
+    } else {
+        bookmark.classList.add('unbookmarked');
+    }
+
+    sidebarNoteCard.appendChild(bookmark)
+
+    bookmark.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notes[getNoteIndex(noteID)].bookmarked = !notes[getNoteIndex(noteID)].bookmarked;
+        if(showingBookmarks){
+            showBookmarkedNotes()
+        } else{
+            renderSidebarNoteCards()
+        }        
+    })
 
     const deleteNoteBtn = document.createElement('button');
     deleteNoteBtn.classList.add('delete-note-btn');
@@ -58,8 +101,8 @@ function createSidebarNoteCard(title, date, containerEl, noteID){
 }
 
 function renderSidebarNoteCards(){
-    sidebarEl.innerHTML = '';
-    notes.forEach(note => createSidebarNoteCard(note.title, note.date, sidebarEl, note.id));
+    displayingNotesContainerEl.innerHTML = '';
+    displayingNotes.forEach(note => createSidebarNoteCard(note.title, note.date, displayingNotesContainerEl, note.id, note.bookmarked));
 }
 
 function createBlankNote(){
@@ -95,7 +138,7 @@ function createNewNote(){
     const id = idNum;
     idNum++;
 
-    notes.push({title: noteTitle, body: noteBody, id:id, date: date});
+    notes.push({title: noteTitle, body: noteBody, id:id, date: date, bookmarked: false});
     updateNoteData()
     updateCurrentNoteID(id);
     renderSidebarNoteCards();
@@ -140,6 +183,9 @@ window.addEventListener('keydown', (e) => {
         }
     }
 })
+
+bookmarkNavBtn.addEventListener('click', showBookmarkedNotes);
+displayAllNotesBtn.addEventListener('click', showAllNotes);
 
 noteTitleEl.value = '';
 noteBodyEl.value = '';
