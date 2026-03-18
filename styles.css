@@ -226,7 +226,6 @@ button {
 /* Tag styling */
 #tags-input {
     height: 5%;
-    display: flex;
     padding: 5px;
 }
 
@@ -249,4 +248,9 @@ button {
     text-align: center;
     font-size: 0.8rem;
     padding: 3px;
+}
+
+select {
+    background-color: var(--primary);
+    color: white;
 }

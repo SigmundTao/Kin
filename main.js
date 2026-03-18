@@ -16,13 +16,34 @@ let showingBookmarks = false;
 const notes = JSON.parse(localStorage.getItem('notes')) || [];
 let displayingNotes = [...notes]
 
+function resetDisplayingNotes(){
+    displayingNotes = [...notes]
+}
+
 const tags = JSON.parse(localStorage.getItem('tags')) || [];
 
 const tagSelectEl = document.getElementById('tag-select');
 
+tagSelectEl.addEventListener('change', () => {
+    const selected = tagSelectEl.value;
+    if(selected === 'All'){
+        resetDisplayingNotes()
+        renderSidebarNoteCards()
+    } else {
+        filterByTag(selected)
+    }
+})
+
+function filterByTag(tag){
+    console.log('this is firing');
+    displayingNotes = notes.filter(note => note.tags && note.tags.includes(tag));
+    renderSidebarNoteCards();
+}
+
 function updateTagSelect(){
     tagSelectEl.innerHTML = '';
     const allOption = document.createElement('option');
+    allOption.textContent = 'All'
     tagSelectEl.appendChild(allOption);
 
     tags.forEach(tag => {
@@ -55,7 +76,7 @@ function showBookmarkedNotes(){
 }
 
 function showAllNotes(){
-    displayingNotes = [...notes];
+    resetDisplayingNotes();
     showingBookmarks = false;
     renderSidebarNoteCards()
 }
@@ -79,6 +100,8 @@ function loadNote(id){
     } else {
         tagInputEl.value = note.tags.map(tag => `[${tag}]`).join(' ')
     }
+    tagInputEl.style.display = 'none'
+    tagDisplayEl.style.display = 'flex'
     updateCurrentNoteID(note.id)
     updateWordCount()
 
@@ -132,6 +155,7 @@ function createSidebarNoteCard(title, date, containerEl, noteID, bookmarked){
         e.stopPropagation();
         notes.splice(getNoteIndex(noteID), 1);
         updateNoteData()
+        resetDisplayingNotes()
         renderSidebarNoteCards()
     })
 
@@ -180,8 +204,9 @@ function createNewNote(){
     const id = idNum;
     idNum++;
 
-    notes.push({title: noteTitle, body: noteBody, id:id, date: date, bookmarked: false});
+    notes.push({title: noteTitle, body: noteBody, id:id, date: date, bookmarked: false,tags: []});
     updateNoteData()
+    resetDisplayingNotes()
     updateCurrentNoteID(id);
     renderSidebarNoteCards();
     currentNoteDisplayState = 'Editing';
@@ -359,11 +384,21 @@ noteBodyEl.addEventListener('input', () => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
         updateWordCount()
-        createOrEdit()
+        if(currentNoteDisplayState === 'Editing'){
+            createOrEdit()
+        }
     },300)
 })
 
-
+noteTitleEl.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        if(!checkForDuplicateNoteTitles(noteTitleEl.value, currentNoteID)){
+            createOrEdit()
+        }
+        console.log('bouncy debounce')
+    }, 300)
+})
 
 window.addEventListener('keydown', (e) => {
     //Save note with alt+s
@@ -405,7 +440,6 @@ bookmarkNavBtn.addEventListener('click', showBookmarkedNotes);
 displayAllNotesBtn.addEventListener('click', showAllNotes);
 
 
-window.addEventListener('keydown', (e) => {console.log(e.key)})
 noteTitleEl.value = '';
 noteBodyEl.value = `Press 'alt + n' to create a new note`;
 tagInputEl.value = '';
