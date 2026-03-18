@@ -16,6 +16,31 @@ let showingBookmarks = false;
 const notes = JSON.parse(localStorage.getItem('notes')) || [];
 let displayingNotes = [...notes]
 
+const tags = JSON.parse(localStorage.getItem('tags')) || [];
+
+const tagSelectEl = document.getElementById('tag-select');
+
+function updateTagSelect(){
+    tagSelectEl.innerHTML = '';
+    const allOption = document.createElement('option');
+    tagSelectEl.appendChild(allOption);
+
+    tags.forEach(tag => {
+        tagSelectEl.appendChild(createTagOption(tag))
+    })
+}
+
+function createTagOption(tag){
+    const option = document.createElement('option');
+    option.textContent = tag;
+    option.value = tag;
+    return option
+}
+
+function updateTagData(){
+    localStorage.setItem('tags', JSON.stringify(tags));
+}
+
 let idNum = notes.length > 0 ? Math.max(...notes.map(n => n.id)) + 1 : 1;
 
 function showBookmarkedNotes(){
@@ -279,7 +304,24 @@ function getTags(){
 function saveTags(tagArr){
     const index = getNoteIndex(currentNoteID)
     if(index === -1) return
+
+    const oldTags = notes[index].tags;
+    const removedTags = oldTags.filter(tag => !tagArr.includes(tag))
+
     notes[index].tags = tagArr
+
+    tagArr.forEach(tag => {
+        if(!tags.includes(tag)) tags.push(tag)
+    })
+
+    removedTags.forEach(t => {
+        const stillInUse = notes.some(t =>notes.tag && notes.tag.includes(t))
+        if(!stillInUse){
+            tags.splice(tags.indexOf(t), 1)
+        }
+    })
+    updateTagData();
+    updateTagSelect()
     updateNoteData()
 }
 
@@ -368,3 +410,4 @@ noteTitleEl.value = '';
 noteBodyEl.value = `Press 'alt + n' to create a new note`;
 tagInputEl.value = '';
 renderSidebarNoteCards()
+updateTagSelect()
