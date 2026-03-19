@@ -1,71 +1,61 @@
+import { notes } from './state.js'
+import { loadNote } from './editor.js'
 
-const searchMenu = document.getElementById('search-menu');
-const closeSearchMenuBtn = document.getElementById('close-search-menu-btn');
-const searchBarEl = document.getElementById('search-bar');
-const searchResultsHolderEl = document.getElementById('search-results');
+const searchMenu = document.getElementById('search-menu')
+const closeSearchMenuBtn = document.getElementById('close-search-menu-btn')
+const searchBarEl = document.getElementById('search-bar')
+const searchResultsHolderEl = document.getElementById('search-results')
 
 let searchResults = [...notes]
-let debounceTimer;
+let searchDebounce
 
-function openSearchMenu(){
-    searchBarEl.value = '';
-    displaySearchResults(searchResults, searchResultsHolderEl)
-    searchMenu.showModal();
-    searchBarEl.focus();
+export function initSearch(){
+    closeSearchMenuBtn.addEventListener('click', closeSearchMenu)
+    searchBarEl.addEventListener('input', handleSearchInput)
+    searchMenu.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') closeSearchMenu()
+    })
+}
+
+export function openSearchMenu(){
+    searchBarEl.value = ''
+    searchResultsHolderEl.innerHTML = ''
+    displaySearchResults(notes, searchResultsHolderEl)
+    searchMenu.showModal()
+    searchBarEl.focus()
 }
 
 function closeSearchMenu(){
-    searchMenu.close();
+    searchMenu.close()
 }
 
+function handleSearchInput(e){
+    clearTimeout(searchDebounce)
+    searchDebounce = setTimeout(() => {
+        searchResults = notes.filter(item => item.title.includes(e.target.value))
+        searchResultsHolderEl.innerHTML = ''
+        displaySearchResults(searchResults, searchResultsHolderEl)
+    }, 300)
+}
 
-
-function createMenuItem(fileObj){
-    const menuItem = document.createElement('div');
-    menuItem.classList.add('search-menu-item');
+function createMenuItem(note){
+    const menuItem = document.createElement('div')
+    menuItem.classList.add('search-menu-item')
     menuItem.innerHTML = `
-        <img src="assets/text-icon.svg" class ="search-result-img">
-        <p>${fileObj.title}</p>
+        <img src="assets/text-icon.svg" class="search-result-img">
+        <p>${note.title}</p>
         <div class="date-container">
-            <img src="assets/date-icon.svg" class ="search-result-img">
-            <p>${fileObj.date}</p>
+            <img src="assets/date-icon.svg" class="search-result-img">
+            <p>${note.date}</p>
         </div>
     `
-
     menuItem.addEventListener('click', () => {
-        loadNote(fileObj.id);
-        closeSearchMenu();
-    })
-    return menuItem;
-}
-
-function displaySearchResults(array, desiredOuputContainer){
-    array.forEach(item => {
-        desiredOuputContainer.appendChild(createMenuItem(item))
-    })
-}
-
-let searchDebounce
-
-searchBarEl.addEventListener('input', (e) => {
-    clearTimeout(searchDebounce);
-    searchDebounce = setTimeout(() => {
-        searchResults = [];
-        searchResultsHolderEl.innerHTML = '';
-        notes.forEach(item => {
-            if(item.title.includes(e.target.value)){
-                searchResults.push(item)
-            }
-        });
-        console.log(searchResults);
-        displaySearchResults(searchResults, searchResultsHolderEl)
-    },300)
-})
-
-searchMenu.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape'){
+        loadNote(note.id)
         closeSearchMenu()
-    }
-})
+    })
+    return menuItem
+}
 
-closeSearchMenuBtn.addEventListener('click', closeSearchMenu);
+function displaySearchResults(array, container){
+    array.forEach(item => container.appendChild(createMenuItem(item)))
+}

@@ -1,76 +1,69 @@
-const sidebarEl = document.getElementById('sidebar');
-const displayingNotesContainerEl = document.getElementById('displaying-notes-container');
-let showingBookmarks = false;
-const bookmarkNavBtn = document.getElementById('bookmark-nav-item');
-const displayAllNotesBtn = document.getElementById('all-notes-btn');
-const noteDisplayDivEl = document.getElementById('notes-display-div');
+import { displayingNotes, notes, showingBookmarks, resetDisplayingNotes, getCurrentNoteId, setCurrentNoteID, setDisplayState } from './state.js'
+import { getNoteIndex, updateNoteData } from './storage.js'
+import { loadNote } from './editor.js'
+import { showBookmarkedNotes } from './bookmarks.js'
+
+const displayingNotesContainerEl = document.getElementById('displaying-notes-container')
 
 export function renderSidebarNoteCards(){
-    displayingNotesContainerEl.innerHTML = '';
-    displayingNotes.forEach(note => createSidebarNoteCard(note.title, note.date, displayingNotesContainerEl, note.id, note.bookmarked));
+    displayingNotesContainerEl.innerHTML = ''
+    displayingNotes.forEach(note => {
+        const card = new NoteCard(note)
+        displayingNotesContainerEl.appendChild(card.element)
+    })
 }
 
-function createSidebarNoteCard(title, date, containerEl, noteID, bookmarked){
-    const sidebarNoteCard = document.createElement('div');
-    sidebarNoteCard.classList.add('note-card')
-    sidebarNoteCard.innerHTML = `
-        <h4>${title}</h4>
-        <p>${date}</p>
-    `;
-     
-    const bookmark = document.createElement('div');
-    bookmark.classList.add('note-card-bookmark')
-    if(bookmarked){
-        bookmark.classList.add('bookmarked')
-    } else {
-        bookmark.classList.add('unbookmarked');
+class NoteCard {
+    constructor(note){
+        this.note = note
+        this.element = this.createElement()
     }
 
-    sidebarNoteCard.appendChild(bookmark)
+    createElement(){
+        const card = document.createElement('div')
+        card.classList.add('note-card')
+        card.innerHTML = `
+            <h4>${this.note.title}</h4>
+            <p>${this.note.date}</p>
+        `
+        card.id = this.note.id;
+        card.appendChild(this.createBookmark())
+        card.appendChild(this.createDeleteBtn())
+        card.addEventListener('click', () => loadNote(this.note.id))
+        return card
+    }
 
-    bookmark.addEventListener('click', (e) => {
-        e.stopPropagation();
-        notes[getNoteIndex(noteID)].bookmarked = !notes[getNoteIndex(noteID)].bookmarked;
-        if(showingBookmarks){
-            showBookmarkedNotes()
-        } else{
+    createBookmark(){
+        const bookmark = document.createElement('div')
+        const isBookmarked = this.note.bookmarked ? 'bookmarked' : 'unbookmarked'
+        bookmark.classList.add('note-card-bookmark', isBookmarked)
+        const note = notes[getNoteIndex(this.note.id)];
+        bookmark.addEventListener('click', (e) => {
+            e.stopPropagation()
+            note.bookmarked = !note.bookmarked
+            /// Updates note array data directly
+            updateNoteData()
+            if(showingBookmarks) showBookmarkedNotes()
+            else { renderSidebarNoteCards() }
+        })
+        return bookmark
+    }
+
+    createDeleteBtn(){
+        const btn = document.createElement('button')
+        btn.classList.add('delete-note-btn')
+        btn.textContent = 'x'
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation()
+            notes.splice(getNoteIndex(this.note.id), 1)
+            updateNoteData()
+            resetDisplayingNotes()
+            if(getCurrentNoteId() === this.note.id){
+                setCurrentNoteID(null)
+                setDisplayState('Idle')
+            }
             renderSidebarNoteCards()
-        }        
-    })
-
-    const deleteNoteBtn = document.createElement('button');
-    deleteNoteBtn.classList.add('delete-note-btn');
-    deleteNoteBtn.textContent = 'x';
-    deleteNoteBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        notes.splice(getNoteIndex(noteID), 1);
-        updateNoteData()
-        resetDisplayingNotes()
-        renderSidebarNoteCards()
-    })
-
-    sidebarNoteCard.appendChild(deleteNoteBtn) 
-
-    sidebarNoteCard.addEventListener('click', () => loadNote(noteID))
-    containerEl.appendChild(sidebarNoteCard)
+        })
+        return btn
+    }
 }
-
-function showAllNotes(){
-    resetDisplayingNotes();
-    showingBookmarks = false;
-    renderSidebarNoteCards()
-}
-
-function showBookmarkedNotes(){
-    showingBookmarks = true;
-    displayingNotes = [];
-    notes.forEach(note => {
-        if(note.bookmarked){
-            displayingNotes.push(note);
-        }
-    })
-    renderSidebarNoteCards()
-}
-
-bookmarkNavBtn.addEventListener('click', showBookmarkedNotes);
-displayAllNotesBtn.addEventListener('click', showAllNotes);

@@ -1,66 +1,65 @@
-import { renderSidebarNoteCards } from './sidebar';
-import { updateNoteData } from './main';
-import { updateTagData } from './storage';
+import { notes, tags, currentNoteID } from './state.js'
+import { getNoteIndex } from './storage.js'
+import { updateTagData, updateNoteData } from './storage.js'
+import { renderSidebarNoteCards } from './sidebar.js'
 
-const tags = JSON.parse(localStorage.getItem('tags')) || [];
-const tagInputEl = document.getElementById('tags-input');
-const tagDisplayEl = document.getElementById('tags-display');
-const tagSelectEl = document.getElementById('tag-select');
+const tagInputEl = document.getElementById('tags-input')
+const tagDisplayEl = document.getElementById('tags-display')
+const tagSelectEl = document.getElementById('tag-select')
 
-tagSelectEl.addEventListener('change', () => {
-    const selected = tagSelectEl.value;
+export function initTags(){
+    tagInputEl.addEventListener('blur', handleTagBlur)
+    tagDisplayEl.addEventListener('click', handleTagDisplayClick)
+    tagSelectEl.addEventListener('change', handleTagSelectChange)
+}
+
+function handleTagBlur(){
+    const parsedTags = getTags()
+    tagInputEl.style.display = 'none'
+    tagDisplayEl.style.display = 'flex'
+    tagDisplayEl.innerHTML = parsedTags.map(tag => `<span class="tag">${tag}</span>`).join('')
+    saveTags(parsedTags)
+}
+
+function handleTagDisplayClick(){
+    tagDisplayEl.style.display = 'none'
+    tagInputEl.style.display = 'block'
+    tagInputEl.focus()
+}
+
+function handleTagSelectChange(){
+    const selected = tagSelectEl.value
     if(selected === 'All'){
-        resetDisplayingNotes()
-        renderSidebarNoteCards()
+        import('./state.js').then(({ resetDisplayingNotes }) => {
+            resetDisplayingNotes()
+            renderSidebarNoteCards()
+        })
     } else {
         filterByTag(selected)
     }
-})
-
-function filterByTag(tag){
-    console.log('this is firing');
-    displayingNotes = notes.filter(note => note.tags && note.tags.includes(tag));
-    renderSidebarNoteCards();
 }
 
-function updateTagSelect(){
-    tagSelectEl.innerHTML = '';
-    const allOption = document.createElement('option');
-    allOption.textContent = 'All'
-    tagSelectEl.appendChild(allOption);
-
-    tags.forEach(tag => {
-        tagSelectEl.appendChild(createTagOption(tag))
-    })
-}
-
-function createTagOption(tag){
-    const option = document.createElement('option');
-    option.textContent = tag;
-    option.value = tag;
-    return option
-}
-
-const tagColours = [
-    [98, 0, 255, 0.5],
-    [0, 223, 255, 0.5],
-    [255, 0, 0, 0.5],
-    [228, 255, 0, 0.5],
-    [218, 0, 255, 0.5],
-    [0, 255, 0, 0.5],
-];
-
-function getTags(){
+export function getTags(){
     const matches = tagInputEl.value.match(/\[([^\]]+)\]/g) || []
-    const tags = matches.map(tag => tag.slice(1, -1))
-    return tags
+    return matches.map(tag => tag.slice(1, -1))
 }
 
-function saveTags(tagArr){
+export function loadTagsForNote(note){
+    tagInputEl.value = note.tags && note.tags.length > 0
+        ? note.tags.map(tag => `[${tag}]`).join(' ')
+        : ''
+    tagDisplayEl.innerHTML = note.tags
+        ? note.tags.map(tag => `<span class="tag">${tag}</span>`).join('')
+        : ''
+    tagInputEl.style.display = 'none'
+    tagDisplayEl.style.display = 'flex'
+}
+
+export function saveTags(tagArr){
     const index = getNoteIndex(currentNoteID)
     if(index === -1) return
 
-    const oldTags = notes[index].tags;
+    const oldTags = notes[index].tags || []
     const removedTags = oldTags.filter(tag => !tagArr.includes(tag))
 
     notes[index].tags = tagArr
@@ -70,28 +69,31 @@ function saveTags(tagArr){
     })
 
     removedTags.forEach(t => {
-        const stillInUse = notes.some(t =>notes.tag && notes.tag.includes(t))
-        if(!stillInUse){
-            tags.splice(tags.indexOf(t), 1)
-        }
+        const stillInUse = notes.some(note => note.tags && note.tags.includes(t))
+        if(!stillInUse) tags.splice(tags.indexOf(t), 1)
     })
-    updateTagData();
+
+    updateTagData()
     updateTagSelect()
     updateNoteData()
 }
 
-tagInputEl.addEventListener('blur', () => {
-    const tags = getTags();
-    tagInputEl.style.display = 'none';
-    tagDisplayEl.style.display = 'flex';
-    tagDisplayEl.innerHTML = tags.map(tag => `
-        <span class="tag">${tag}</span>
-    `).join('')
-    saveTags(tags);
-})
+export function updateTagSelect(){
+    tagSelectEl.innerHTML = ''
+    const allOption = document.createElement('option')
+    allOption.textContent = 'All'
+    tagSelectEl.appendChild(allOption)
+    tags.forEach(tag => {
+        const option = document.createElement('option')
+        option.textContent = tag
+        option.value = tag
+        tagSelectEl.appendChild(option)
+    })
+}
 
-tagDisplayEl.addEventListener('click', () => {
-    tagDisplayEl.style.display = 'none'
-    tagInputEl.style.display = 'block'
-    tagInputEl.focus()
-})
+function filterByTag(tag){
+    import('./state.js').then(({ notes, setDisplayingNotes }) => {
+        setDisplayingNotes(notes.filter(note => note.tags && note.tags.includes(tag)))
+        renderSidebarNoteCards()
+    })
+}
