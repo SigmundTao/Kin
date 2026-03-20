@@ -6,6 +6,7 @@ import { initShortcuts } from './shortcuts.js'
 import { showBookmarkedNotes, showAllNotes } from './bookmarks.js'
 import { updateEditorVisibility } from './state.js'
 import { initPermSidebar } from './permsidebar.js'
+import { initFiles } from './files.js'
 
 const bookmarkNavBtn = document.getElementById('bookmark-nav-item')
 const displayAllNotesBtn = document.getElementById('all-notes-btn')
@@ -21,3 +22,4 @@ initShortcuts()
 initPermSidebar()
 renderSidebarNoteCards()
 updateTagSelect()
+initFiles()

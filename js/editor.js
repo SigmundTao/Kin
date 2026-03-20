@@ -3,9 +3,6 @@ import { getNoteIndex, updateNoteData } from './storage.js'
 import { renderSidebarNoteCards } from './sidebar.js'
 import { loadTagsForNote, clearTags } from './tags.js'
 
-console.log(notes);
-
-
 const noteTitleEl = document.getElementById('note-title')
 const noteBodyEl = document.getElementById('note-body')
 const wordCountEl = document.getElementById('word-count')

@@ -76,7 +76,7 @@ window.addEventListener('contextmenu', (event) => {
     && !event.target.parentElement.classList.contains('note-card')) return
     document.querySelector('.right-click-menu')?.remove()
     const xPosition = event.clientX
-    const yPosition = event.clientY
+    const yPosition = event.clientY 
     const menu = createRightClickMenu(xPosition, yPosition)
     collapsingFileHolderEl.appendChild(menu)
     menu.addEventListener('click', (e) => e.stopPropagation())

@@ -343,3 +343,11 @@ select {
 .rc-menu-item:hover {
     background-color: var(--tertiary);
 }
+
+#new-file-anchor-text {
+    color: gold;
+}
+
+#new-file-anchor-text:hover {
+    cursor: pointer;
+}
