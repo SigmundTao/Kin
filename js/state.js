@@ -6,9 +6,11 @@ export let currentNoteDisplayState = 'Idle'
 export let showingBookmarks = false
 export let idNum = notes.length > 0 ? Math.max(...notes.map(n => n.id)) + 1 : 1
 export const noteDisplayStates = ['Idle', 'Editing', 'Creating']
+export let isFileHolderOpen = false
 const idleScreenEl = document.getElementById('idle-screen');
 
 export function setCurrentNoteID(id){ currentNoteID = id }
+
 export function setDisplayState(state){
     if(!noteDisplayStates.includes(state)){
         console.warn('Not a valid state:', state)
@@ -30,3 +32,6 @@ export function updateEditorVisibility(){
     else { idleScreenEl.style.display = 'flex' }
     console.log('state after: ', currentNoteDisplayState)
 }
+
+export function getFileHolderState(){ return isFileHolderOpen }
+export function toggleFileHolderState(){ isFileHolderOpen = !isFileHolderOpen }
