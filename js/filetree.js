@@ -137,7 +137,7 @@ function returnImgBasedOnFileType(fileType){
 export function createFolder(){
     removeTempFolder()
     const temporaryCard = document.createElement('div')
-    temporaryCard.classList.add('note-card')
+    temporaryCard.classList.add('file-card')
     temporaryCard.classList.add('temp')
     temporaryCard.innerHTML = `
         <div class="file-card-header">
@@ -252,12 +252,13 @@ function createDeleteBtn(toBeDeleted, menu){
 window.addEventListener('contextmenu', (event) => {
     event.preventDefault()
     const eventTarget = event.target
+    console.log(eventTarget)
 
-    if(!eventTarget.classList.contains('note-card')
-    && !eventTarget.parentElement.classList.contains('note-card')) return
+    if(!eventTarget.classList.contains('file-card')
+    && !eventTarget.parentElement.classList.contains('file-card')) return
     document.querySelector('.right-click-menu')?.remove()
 
-    const file = eventTarget.classList.contains('note-card') ? eventTarget : eventTarget.parentElement
+    const file = eventTarget.classList.contains('file-card') ? eventTarget : eventTarget.parentElement
     console.log('file-id: ', file.id)
     const menu = createRightClickMenu(event.clientX, event.clientY, files[getFileIndex(file.id)])
     fileTreeEl.appendChild(menu)

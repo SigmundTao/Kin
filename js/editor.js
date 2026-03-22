@@ -36,7 +36,7 @@ function handleBodyInput(){
 }
 
 function highlightSelectedFile(id){
-    document.querySelectorAll('.note-card').forEach(card => card.classList.remove('selected-note'))
+    document.querySelectorAll('.file-card').forEach(card => card.classList.remove('selected-note'))
     const selectedCard = document.getElementById(id)
     if(selectedCard) selectedCard.classList.add('selected-note')
 }
