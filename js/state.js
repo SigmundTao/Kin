@@ -2,6 +2,7 @@ export const files = JSON.parse(localStorage.getItem('files'))|| []
 export let selectedFileId = null
 export let currentFolderId = null
 export let currentAppState = 'Idle'
+export let draggedElId = null
 export let idNum = files.length > 0 ? Math.max(...files.map(n => n.id)) + 1 : 1
 export const appStates = ['Idle', 'Editing', 'Creating']
 export let isFileHolderOpen = false
@@ -39,3 +40,6 @@ export function updateEditorVisibility(){
 
 export function getFileHolderState(){ return isFileHolderOpen }
 export function toggleFileHolderState(){ isFileHolderOpen = !isFileHolderOpen }
+
+export function getDraggedElId(){ return draggedElId }
+export function setDraggedElid(id){ draggedElId = id }

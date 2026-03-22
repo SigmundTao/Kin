@@ -1,0 +1,5 @@
+[x] Stop folders from loading on click
+[ ] Allow files to be stored within folders
+[ ] Render files inside parent folders and make it collapsable
+[ ] create tab system
+[ ] Put cursor at the end of text when focusing on the title input

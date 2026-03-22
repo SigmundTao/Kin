@@ -402,3 +402,12 @@ button {
     background-color: var(--secondary);
     border: none;
 }
+
+.hide {
+    display: none;
+}
+
+.drag-over {
+    background-color: var(--accent);
+    color: black;
+}

@@ -1,4 +1,4 @@
-import { files, currentFolderId, isFileHolderOpen, toggleFileHolderState, incrementIdNum, idNum, getSelectedFileId, setSelectedFileId, setAppState, updateEditorVisibility } from './state.js'
+import { files, currentFolderId, isFileHolderOpen, toggleFileHolderState, incrementIdNum, idNum, getSelectedFileId, setSelectedFileId, setAppState, updateEditorVisibility, setDraggedElid, getDraggedElId } from './state.js'
 import { getFileIndex, getFormattedDate, updateFileData } from './storage.js'
 import { loadFile, createBlankNote, focusOnNoteTitle } from './editor.js'
 
@@ -26,6 +26,7 @@ class FileCard {
 
     createElement(){
         const card = document.createElement('div')
+        this.addDragEventListner(card)
         const type = this.file.type
         const imgSrc = returnImgBasedOnFileType(type)
         card.classList.add('note-card')
@@ -36,9 +37,55 @@ class FileCard {
         card.id = this.file.id
         if(this.file.type === 'note'){
             card.addEventListener('click', () => loadFile(this.file.id))
+        } else if(this.file.type === 'folder'){
+            this.addDropListener(card)
         }
         return card
     }
+
+    addDragEventListner(card){
+        card.draggable = 'true';
+        card.addEventListener('dragstart', dragstart)
+    }
+
+    addDropListener(card){
+        card.addEventListener('dragenter', dragEnter)
+        card.addEventListener('dragover', dragOver)
+        card.addEventListener('dragleave', dragLeave)
+        card.addEventListener('drop', drop)
+    }
+}
+
+function dragstart(e){
+    setDraggedElid(e.target.id)
+}
+
+function dragEnter(e){
+    e.preventDefault()
+    e.target.classList.add('drag-over')
+}
+
+function dragOver(e){
+    e.preventDefault()
+    e.target.classList.add('drag-over')
+}
+
+function dragLeave(e){
+    e.target.classList.remove('drag-over')
+}
+
+function drop(e){
+    e.target.classList.remove('drag-over')
+
+    const fileCard = e.target.classList.contains('note-card') ?  e.target
+    : e.target.parentElement
+
+    const draggedFile = files[getFileIndex(getCurrentlyDraggedElId())]
+
+    draggedFile.parentId = fileCard.id
+    setDraggedElid = null
+    updateFileData()
+    renderFolderContents()
 }
 
 function returnImgBasedOnFileType(fileType){
