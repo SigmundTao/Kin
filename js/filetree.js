@@ -34,7 +34,9 @@ class FileCard {
             <p class="file-name">${this.file.title}</p>
         `
         card.id = this.file.id
-        card.addEventListener('click', () => loadFile(this.file.id))
+        if(this.file.type === 'note'){
+            card.addEventListener('click', () => loadFile(this.file.id))
+        }
         return card
     }
 }
