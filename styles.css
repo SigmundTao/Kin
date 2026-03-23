@@ -1,441 +1,99 @@
 :root {
-    --primary: #292524;
-    --secondary: #44403B;
-    --tertiary: #161517;
-    --accent: gold;
-    --border-radius: 5px;
+    --primary: #333333;
+    --secondary: #4d4d4d;
+    --tertiary: #666666;
+    --accent: #fcb900;
 }
 
 * {
-    color: white;
     box-sizing: border-box;
 }
 
+/* =====================
+   Layout
+   ===================== */
 body {
-    display: flex;
-    background-color: var(--primary);
     margin: 0;
-    height: 100vh;
-    width: 100vw;
-    padding: 0;
-    gap: 0;
+    color: white;
 }
-
-button {
-    background-color: var(--tertiary);
-    border: none;
-}
-
-.delete-note-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-}
-
-#sidebar {
-    height: 100vh;
-    border-right: 1px solid var(--secondary);
+main {
     display: flex;
-    flex-direction: column;
-    background-color: var(--secondary);
-    padding-left: 50px;
-    width: 30vw;
-    margin: 0;
-    overflow: hidden;
 }
 
-#displaying-notes-container {
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-    height: 85%;
-}
-
-.file-card {
-    padding: 0;
-    position: relative;
-    height: auto;
-    gap: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    border-radius: var(--border-radius);
-    width: 100%;
-    overflow: hidden;
-}
-
-.file-card-header {
-    height: 3vh;
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    align-items: center;
-    gap: 5px;
-    overflow: hidden;
-}
-
-.folder-contents {
-    display: none;
-    width: 100%;
-}
-
-.folder-contents *:hover {
-    background-color: var(--tertiary);
-}
-
-.showing-contents {
-    display: flex;
-    height: auto;
-    flex-direction: column;
-}
-
-.file-card:hover {
-    cursor: pointer;
-    background-color: darkgrey;
-}
-
-.file-card-img {
-    height: 100%;
-    width: 10%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-
-}
-
-.file-name {
-    overflow: hidden;
-    font-size: 0.7rem;
-    height: 100%;
-    max-width: 80%;
-    display: flex;
-    align-items: center;
-}
-
-#note-display-div {
-    display: flex;
-    flex-direction: column;
-    max-width: 95vw;
-    padding-left: 5vw;
-}
-
-#note-title {
-    height: 15vh;
-    padding-left: 10px;
-    font-size: 3rem;
-    background-color: var(--primary);
-    border: none;
-}
-
-#note-body {
-    height: 70vh;
-    font-size: 1.2rem;
-    padding: 10px;
-    background-color: var(--primary);
-    border: none;
-}
-
-.note-card-bookmark {
-    height: 20%;
-    aspect-ratio: 1;
-    position: absolute;
-    right: 15px;
-    bottom: 15px;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-.bookmarked {
-    background-image: url(/assets/bookmark-filled.svg);
-}
-
-.unbookmarked {
-    background-image: url(/assets/bookmark-unfilled.svg);
-}
-
+/* =====================
+   Navigation
+   ===================== */
 #nav-bar {
+    height: 100vh;
+    width: 6vw;
+    margin: 0;
+    padding: 0;
+    background-color: var(--tertiary);
     list-style: none;
     display: flex;
-    height: 3%;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 0;
-    padding: 3px;
-    gap: 3px;
+    flex-direction: column;
 }
 
 .nav-item {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 15%;
-}
-
-.nav-item:hover {
-    background-color: red;
-    cursor: pointer;
-}
-
-#bookmark-nav-item {
-    background-image: url(/assets/bookmark-unfilled.svg);
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-#all-notes-btn {
-    background-image: url(/assets/menu.svg);
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.selected-note {
-    background-color: var(--primary);
-}
-
-#search-menu {
-    background-color: var(--primary);
-    border: 2px solid var(--tertiary);
-    width: 50vw;
-    padding: 15px;
-}
-
-#search-bar {
-    background-color: var(--primary);
-    width: 100%;
-    border: 1px solid var(--secondary);
-}
-
-#search-results {
-    height: 30vh;
-    width: 100%;
-    padding: 3px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.search-menu-item {
-    height: 15%;
-    border: 1px solid var(--secondary);
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.search-menu-item:hover {
-    background-color: var(--secondary);
-    cursor: pointer;
-}
-
-.search-result-img {
-    height: 80%;
-}
-
-.date-container {
-    height: 100%;
-    width: 30%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-#note-info-holder {
-    height: 3vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    padding-right: 15px;
-    border: 1px solid black;
-}
-
-.info-span {
-    background-color: var(--secondary);
-    border: 1px solid var(--tertiary);
     height: 5vh;
-    display: flex;
-    padding: 10px;
-}
-
-.info-span * {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#dates-span {
-    gap: 15px;
-    border-top-right-radius: var(--border-radius);
-}
-
-#counts-span {
-    gap: 15px;
-    border-top-left-radius: var(--border-radius);
-}
-
-#categories {
-    height: 5%;
-}
-
-/* Tag styling */
-#tags-input {
-    height: 5%;
-    padding: 5px;
-}
-
-#tags-display {
-    display: none;
-    height: 5%;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 5px;
-    gap: 5px;
-}
-
-.tag {
-    height: 80%;
-    min-width: 10%;
+    width: 100%;
     background-color: green;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 0.8rem;
-    padding: 3px;
 }
+#files-btn {}
 
-#tag-select {
-    background-color: var(--primary);
-    color: white;
-    max-width: 50%;
-}
-
-#idle-screen {
+/* =====================
+   File Tree
+   ===================== */
+#filetree {
+    background-color: var(--secondary);
     height: 100vh;
-    width: 70vw;
-    position: fixed;
-    top: 0;
-    left: 30vw;
-    background-color: var(--primary);
-    color: var(--secondary);
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+    width: 20vw;
 }
-
-.hyperlink {
-    color: var(--accent);
-    font-weight: bold;
-}
-
-.hyperlink:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-#perm-sidebar {
-    height: 100vh;
-    width: 50px;
-    background-color: var(--primary);
-    position: fixed;
-    top: 0;
-    left: 0;
-
-}
-
-#perm-nav-bar {
-    list-style: none;
+#filetree-nav {
     width: 100%;
-    height: 100%;
     margin: 0;
-    display: flex;
-    flex-direction: column;
     padding: 0;
+    background-color: pink;
+    display: flex;
+    justify-content: flex-start;
+    align-items: end;
+    height: 5vh;
+    list-style: none;
 }
-
-.perm-nav-bar-item {
-    width: 100%;
+.filetree-nav-item {
+    height: 100%;
+    border: 1px solid red;
     aspect-ratio: 1;
 }
+#new-note-btn {}
+#create-folder-btn {}
+#files-container {}
 
-.perm-nav-bar-item:hover {
-    cursor: pointer;
+/* =====================
+   File Display
+   ===================== */
+#file-display {
+    height: 100vh;
+    width: 80vw;
+    background-color: var(--primary);
 }
 
-#files-btn {
-    background-image: url('./assets/file.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.right-click-menu {
-    height: auto;
-    background-color: var(--secondary);
-    z-index: 1;
-    width: 25vw;
-    border: 1px solid gold;
-    border-radius: var(--border-radius);
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 10px;
-}
-
-.rc-menu-item {
+#tab-bar {
+    background-color: var(--accent);
+    height: 5vh;
     width: 100%;
-    height: 3vh;
-    border-radius: var(--border-radius);
-    display: flex;
-    align-items: center;
-    padding-left: 5px;
 }
 
-.rc-menu-item:hover {
-    background-color: var(--tertiary);
-    cursor: pointer;
-}
+#current-tab-div {}
 
-#new-file-anchor-text {
-    color: gold;
-    text-decoration: underline;
+/* =====================
+   Search Menu
+   ===================== */
+#search-menu {
+    background-color: var(--primary);
+    height: 40vh;
+    width: 50vw;
 }
-
-#new-file-anchor-text:hover {
-    cursor: pointer;
-    color: white;
-}
-
-#create-folder-btn {
-    background-image: url('./assets/folder.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-#new-note-btn {
-    background-image: url('./assets/new-file.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-#temp-card-input {
-    width: 85%;
-    height: 90%;
-    font-size: 0.8rem;
-    background-color: var(--secondary);
-    border: none;
-}
-
-#close-note-btn {
-    position: absolute;
-    top: 50px;
-    right: 50px;
-    z-index: 1;
-}
+#close-search-menu-btn {}
+#search-bar {}
+#search-results {}

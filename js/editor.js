@@ -4,34 +4,10 @@ import { createFolder, renderFolderContents } from './filetree.js'
 import { loadTagsForNote, clearTags, handleTagDisplayClick } from './tags.js'
 import { openSearchMenu } from './search.js'
 
-const noteTitleEl = document.getElementById('note-title')
-const noteBodyEl = document.getElementById('note-body')
-const wordCountEl = document.getElementById('word-count')
-const characterCountEl = document.getElementById('character-count')
-const idleScreenEl = document.getElementById('idle-screen')
-const dateCreatedEl = document.getElementById('date-created')
-const lastEditedEl = document.getElementById('date-last-edited')
-const newNoteHyperlink = document.getElementById('new-note-hyperlink')
-const newFolderHyperlink = document.getElementById('new-folder-hyperlink')
-const searchHyperlink = document.getElementById('search-hyperlink')
-const closeNoteBtn = document.getElementById('close-note-btn')
-
-closeNoteBtn.addEventListener('click', () => {
-    setAppState('Idle')
-    updateEditorVisibility()
-    setSelectedFileId(null)
-})
-
 let bodyDebounce
 
 export function initEditor(){
-    noteBodyEl.addEventListener('input', handleBodyInput)
-    noteTitleEl.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter') handleTagDisplayClick()
-    })
-    newNoteHyperlink.addEventListener('click', createBlankNote)
-    newFolderHyperlink.addEventListener('click', createFolder)
-    searchHyperlink.addEventListener('click', openSearchMenu)
+    
 }
 
 function handleBodyInput(){
@@ -58,8 +34,6 @@ export function loadFile(id){
     const fileIndex = getFileIndex(id)
     if(fileIndex === -1) return
     const file = files[fileIndex]
-    noteTitleEl.value = file.title
-    noteBodyEl.value = file.body
     loadTagsForNote(file)
     setSelectedFileId(file.id)
     setAppState('Editing')

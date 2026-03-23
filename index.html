@@ -7,41 +7,22 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="perm-sidebar">
-        <ul id="perm-nav-bar">
-            <li id="files-btn" class="perm-nav-bar-item"></li>
-        </ul>
-    </div>
-    <div id="sidebar">
+    <main id="page">
         <ul id="nav-bar">
-            <li class="nav-item" id="new-note-btn"></li>
-            <li class="nav-item" id="create-folder-btn"></li>
+            <li id="files-btn" class="nav-item"></li>
         </ul>
-        <div id="displaying-notes-container"></div>
-        <div id="folder-holder"></div>
-    </div>
-    <div id="note-display-div">
-        <button id="close-note-btn">X</button>
-        <input type="text" id="note-title">
-        <input type="text" id="tags-input">
-        <div id="tags-display"></div>
-        <textarea name="note-body-textarea" id="note-body"></textarea>
-        <div id="note-info-holder">
-            <span id="dates-span" class="info-span">
-                <p id="date-created"></p>
-                <p id="date-last-edited"></p>
-            </span>
-            <span id="counts-span" class="info-span">
-                <p id="word-count"></p>
-                <p id="character-count"></p>
-            </span>
+        <div id="filetree">
+            <ul id="filetree-nav">
+                <li class="filetree-nav-item" id="new-note-btn"></li>
+                <li class="filetree-nav-item" id="create-folder-btn"></li>
+            </ul>
+            <div id="files-container"></div>
         </div>
-    </div>
-    <div id="idle-screen">
-        <p>Press <span class="hyperlink" id="new-note-hyperlink">Alt + n</span> to create a new Note</p>
-        <p>Press <span class="hyperlink" id="new-folder-hyperlink">Alt + f</span> to create a new Folder</p>
-        <p>Press <span class="hyperlink" id="search-hyperlink">Alt + d</span> to search for a File</p>
-    </div>
+        <div id="file-display">
+            <div id="tab-bar"></div>
+            <div id="current-tab-div"></div>
+        </div>
+    </main>
     <dialog id="search-menu">
         <div>
             <button id="close-search-menu-btn">X</button>

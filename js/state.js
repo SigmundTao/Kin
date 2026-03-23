@@ -2,10 +2,34 @@ export const files = JSON.parse(localStorage.getItem('files'))|| []
 export let selectedFileId = null
 export let currentFolderId = null
 export let currentAppState = 'Idle'
+export let currentTab = null
 export let draggedElId = null
 export let idNum = files.length > 0 ? Math.max(...files.map(n => n.id)) + 1 : 1
 export const appStates = ['Idle', 'Editing', 'Creating']
 export let isFileHolderOpen = false
+
+/// Tabs
+export const openTabs = []
+
+export function addNewTab(fileId){
+    openTabs.push({
+        file: fileId
+    })
+}
+
+export function deleteTab(tabId){
+    openTabs.splice(getTabIndex(tabId), 1)
+}
+
+function getTabIndex(tabId){
+    return openTabs.findIndex(t => t.id === tabId)
+}
+
+export function getNumberOfTabs(){
+    return openTabs.length()
+}
+
+
 const idleScreenEl = document.getElementById('idle-screen');
 
 export function setAppState(state){
