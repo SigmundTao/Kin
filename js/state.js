@@ -10,29 +10,14 @@ export let isFileHolderOpen = false
 
 /// Tabs
 export const openTabs = []
-export let tabId = openTabs.length > 0 ? Math.max(...files.map(n => n.id)) + 1 : 1
+export let tabId = openTabs.length > 0 ? Math.max(...openTabs.map(n => n.id)) + 1 : 1
 
 export function incrementTabId(){
     tabId++
 }
 
-export function addNewTab(obj){
-    openTabs.push({
-        file: obj.fileId,
-        id: obj.id
-    })
-}
-
-export function deleteTab(tabId){
-    openTabs.splice(getTabIndex(tabId), 1)
-}
-
 export function getTabIndex(tabId){
     return openTabs.findIndex(t => t.tabId === tabId)
-}
-
-export function getNumberOfTabs(){
-    return openTabs.length()
 }
 
 

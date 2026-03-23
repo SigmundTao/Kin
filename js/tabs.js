@@ -1,9 +1,21 @@
 import { loadFile } from "./editor.js"
-import { openTabs, deleteTab, addNewTab, getNumberOfTabs, getTabIndex, tabId, files, getFileHolderState, incrementTabId } from "./state.js"
+import { openTabs, getTabIndex, tabId, files, getFileHolderState, incrementTabId } from "./state.js"
 import { getFileIndex } from "./storage.js"
 
 const tabBar = document.getElementById('tab-bar')
 const currentTabEl = document.getElementById('current-tab')
+
+export function addNewTab(obj){
+    openTabs.push({
+        file: obj.fileId,
+        id: obj.id
+    })
+}
+
+export function deleteTab(tabId){
+    openTabs.splice(getTabIndex(tabId), 1)
+    renderTabs()
+}
 
 export function createDefaultTab(){
         currentTabEl.innerHTML = ''
@@ -53,8 +65,11 @@ function createTabCard(tab){
     closeTabBtn.classList.add('close-tab-btn')
     closeTabBtn.textContent = 'X'
     closeTabBtn.addEventListener('click', () => {
+        console.log('this is happening')
         deleteTab(tab.id)
-        if(!openTabs.length){ createDefaultTab() }
+        if(openTabs.length < 1){
+            setTimeout(createDefaultTab, 1000)
+        }
     })
 
     tabCard.appendChild(tabTitle)
@@ -62,6 +77,8 @@ function createTabCard(tab){
     return tabCard
 }
 
+function updateCurrentTabDisplay(){}
+
 export function checkForDefaultTabs(){
-    openTabs.findIndex(t => t.fileId === null)
+    return openTabs.findIndex(t => t.fileId === null)
 }
