@@ -1,9 +1,9 @@
-import { files, currentFolderId, isFileHolderOpen, incrementIdNum, idNum, getSelectedFileId, setSelectedFileId, setAppState, setDraggedElid, getDraggedElId, toggleFileHolderState } from './state.js'
+import { files, currentFolderId, isFileHolderOpen, toggleFileHolderState, incrementIdNum, idNum, getSelectedFileId, setSelectedFileId, setAppState, setDraggedElid, getDraggedElId } from './state.js'
 import { getFileIndex, getFormattedDate, updateFileData } from './storage.js'
-import { loadFile, createBlankNote, focusOnNoteTitle } from './editor.js'
+import { loadFile, createBlankNote, focusOnNoteTitle, updateEditorVisibility } from './editor.js'
 
 export const fileTreeEl = document.getElementById('filetree');
-const filesContainerEl = document.getElementById('files-container')
+const fileTreeContainerEl = document.getElementById('files-container')
 const createNoteBtn = document.getElementById('create-note-btn');
 const createFolderBtn = document.getElementById('create-folder-btn')
 
@@ -14,8 +14,7 @@ export function renderFolderContents(){
     files.forEach(file => {
         if(file.parentId) return
         const card = file.type === 'folder' ? renderFolder(file) : renderFile(file)
-        
-        filesContainerEl.appendChild(card)
+        fileTreeContainerEl.appendChild(card)
     })  
 }
 
@@ -32,7 +31,6 @@ function renderFolder(folder){
         folderContentsHolder.appendChild(childCard)
     })
 
-    
     return folderCard.element
 }
 
@@ -73,14 +71,13 @@ class FileCard {
             card.appendChild(contentsHolder)
             fileCardHeader.addEventListener('click', () => {
                 contentsHolder.classList.toggle('showing-contents')
-                console.log(contentsHolder.classList)
             })
         }
         return card
     }
 
     addDragEventListner(card){
-        card.draggable = 'true';
+        card.draggable = 'true'
         card.addEventListener('dragstart', dragstart)
     }
 
@@ -92,7 +89,6 @@ class FileCard {
     }
 }
 
-/// Drag and drop files handlers
 function dragstart(e){
     setDraggedElid(e.currentTarget.id)
 }
@@ -117,10 +113,9 @@ function drop(e){
     const targetId = Number(e.currentTarget.id)
 
     if(draggedId === targetId) return
-
     if(isDescendant(draggedId, targetId)) return
 
-    const draggedFile = files[getFileIndex(Number(getDraggedElId()))]
+    const draggedFile = files[getFileIndex(draggedId)]
     if(!draggedFile) return
     
     draggedFile.parentId = targetId
@@ -135,7 +130,6 @@ function isDescendant(draggedId, targetId){
         if(current.parentId === draggedId) return true
         current = files[getFileIndex(current.parentId)]
     }
-
     return false
 }
 
@@ -166,7 +160,6 @@ export function createFolder(){
             renderFolderContents()
         }
     })
-
 }
 
 function removeTempFolder(){
@@ -178,18 +171,16 @@ function saveFolder(){
     const folderName = document.querySelector('#temp-card-input').value
     const id = idNum
     const date = getFormattedDate(new Date())
-
     files.push({
-            title: folderName,
-            body: '',
-            id,
-            type: 'folder',
-            parentId: currentFolderId,
-            date,
-            lastEdited: date,
-            tags: []
-        })
-
+        title: folderName,
+        body: '',
+        id,
+        type: 'folder',
+        parentId: currentFolderId,
+        date,
+        lastEdited: date,
+        tags: []
+    })
     incrementIdNum()
     updateFileData()
 }
@@ -205,13 +196,11 @@ export function closeFileHolder(){
 }
 
 export function toggleFileHolder(){
-    console.log('firing')
     toggleFileHolderState()
     isFileHolderOpen ? closeFileHolder() : openFileHolder()
 }
 
 function createRightClickMenu(posX, posY, file){
-    console.log(file)
     const menu = document.createElement('div')
     menu.classList.add('right-click-menu')
     menu.appendChild(createDeleteBtn(file.id, menu))
@@ -242,6 +231,7 @@ export function deleteFile(id){
     if(id === getSelectedFileId()){
         setSelectedFileId(null)
         setAppState('Idle')
+        updateEditorVisibility()
     }
 }
 
@@ -254,23 +244,19 @@ function createDeleteBtn(toBeDeleted, menu){
         deleteFile(toBeDeleted)
         menu.remove()
     })
-
     return deleteBtn
 }
-
 
 window.addEventListener('contextmenu', (event) => {
     event.preventDefault()
     const eventTarget = event.target
-    console.log(eventTarget)
 
     if(!eventTarget.classList.contains('file-card')
     && !eventTarget.parentElement.classList.contains('file-card')) return
     document.querySelector('.right-click-menu')?.remove()
 
-    const file = eventTarget.classList.contains('file-card') ? eventTarget : eventTarget.parentElement
-    console.log('file-id: ', file.id)
-    const menu = createRightClickMenu(event.clientX, event.clientY, files[getFileIndex(file.id)])
+    const file = eventTarget.closest('.file-card')
+    const menu = createRightClickMenu(event.clientX, event.clientY, files[getFileIndex(Number(file.id))])
     fileTreeEl.appendChild(menu)
     menu.addEventListener('click', (e) => e.stopPropagation())
     window.addEventListener('click', () => menu.remove(), { once: true })

@@ -2,7 +2,6 @@ import { files } from './state.js'
 import { loadFile } from './editor.js'
 
 const searchMenu = document.getElementById('search-menu')
-const closeSearchBtn = document.getElementById('close-search-btn')
 const searchBarEl = document.getElementById('search-bar')
 const searchResultsEl = document.getElementById('search-results')
 
@@ -10,7 +9,6 @@ let searchResults = [...files]
 let searchDebounce
 
 export function initSearch(){
-    closeSearchBtn.addEventListener('click', closeSearchMenu)
     searchBarEl.addEventListener('input', handleSearchInput)
     searchMenu.addEventListener('keydown', (e) => {
         if(e.key === 'Escape') closeSearchMenu()
