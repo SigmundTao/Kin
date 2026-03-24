@@ -88,9 +88,11 @@ export function openFile(fileId){
         const tabIndex = getTabIndexFromFileId(fileId)
         switchToTab(openTabs[tabIndex].id)
     } else {
-        if(checkForDefaultTabs){
+        if(checkForDefaultTabs() !== -1){
             overwriteDefaultTab(fileId)
             loadTab(fileId)
+            const defaultTabIndex = openTabs.findIndex(t => t.file === fileId)
+            switchToTab(openTabs[defaultTabIndex].id)
         } else {
             createTab(fileId)
         }
