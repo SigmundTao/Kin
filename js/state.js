@@ -2,7 +2,7 @@ export const files = JSON.parse(localStorage.getItem('files'))|| []
 export let selectedFileId = null
 export let currentFolderId = null
 export let currentAppState = 'Idle'
-export let currentTab = null
+export let currentTabId = null
 export let draggedElId = null
 export let idNum = files.length > 0 ? Math.max(...files.map(n => n.id)) + 1 : 1
 export const appStates = ['Idle', 'Editing', 'Creating']
@@ -18,6 +18,10 @@ export function incrementTabId(){
 
 export function getTabIndex(tabId){
     return openTabs.findIndex(t => t.tabId === tabId)
+}
+
+export function setCurrentTabId(id){
+    currentTabId = id
 }
 
 

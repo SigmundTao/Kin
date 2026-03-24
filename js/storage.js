@@ -1,4 +1,4 @@
-import { files} from './state.js'
+import { files } from './state.js'
 
 export function updateFileData(){
     localStorage.setItem('files', JSON.stringify(files))
