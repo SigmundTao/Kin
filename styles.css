@@ -394,3 +394,8 @@ input:focus {
 .note-body:focus {
     outline: none;
 }
+
+.selected-file {
+    border: 1px solid var(--accent);
+    background-color: var(--tertiary);
+}

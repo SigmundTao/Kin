@@ -7,18 +7,27 @@ const createNoteBtn = document.getElementById('create-note-btn')
 createNoteBtn.addEventListener('click', createNewNote)
 
 export function highlightSelectedFile(id){
-    document.querySelectorAll('.file-card').forEach(card => card.classList.remove('selected-note'))
+    document.querySelectorAll('.file-card').forEach(card => card.classList.remove('selected-file'))
     const selectedCard = document.getElementById(id)
-    if(selectedCard) selectedCard.classList.add('selected-note')
+    if(selectedCard) selectedCard.classList.add('selected-file')
 }
 
-export function saveNoteChanges(file, title, body){
+function getTitleInput(){
+    return document.querySelector('note-title')
+}
+
+function getBodyInput(){
+    return document.querySelector('note-body')
+}
+
+export function saveNote(file){
     const fileIndex = getFileIndex(file.id)
     if(fileIndex === -1) return
+    const note = files[fileIndex]
     if(checkForDuplicateTitles(title, file.id)) return
-    files[fileIndex].title = title
-    files[fileIndex].body = body
-    files[fileIndex].lastEdited = getFormattedDate(new Date())
+    note.title = getTitleInput().value
+    note.body = getBodyInput().value
+    note.lastEdited = getFormattedDate(new Date())
     setSelectedFileId(file.id)
     setAppState('Editing')
     updateFileData()
@@ -45,20 +54,6 @@ export function createNewNote(){
     setAppState('Editing')
     renderFolderContents()
     return id
-}
-
-
-
-class Tab {
-    constructor(file){
-
-    }
-
-    createPage(){
-        const titleInput = document.createElement('input')
-        titleInput.type = 'text'
-        titleInput.classList.add('title-input')
-    }
 }
 
 export function initEditor(){

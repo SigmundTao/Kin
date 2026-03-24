@@ -1,6 +1,6 @@
 import { selectedFileId, currentAppState, files, currentFolderId } from './state.js'
 import { getFileIndex } from './storage.js'
-import { saveNoteChanges, createNewNote } from './editor.js'
+import { saveNote, createNewNote } from './editor.js'
 import { openSearchMenu } from './search.js'
 import { createFolder } from './filetree.js'
 import {createDefaultTab, openFile } from './tabs.js'
@@ -12,8 +12,8 @@ export function initShortcuts(){
 function handleKeydown(e){
     if(e.altKey && e.key === 's'){
         e.preventDefault()
-        if(currentAppState === 'Creating') createNewNote()
-        else if(currentAppState === 'Editing') saveNoteChanges()
+        saveNote(selectedFileId)
+        console.log('trying to save')
 
     } else if(e.altKey && e.key === 'n'){
         e.preventDefault()

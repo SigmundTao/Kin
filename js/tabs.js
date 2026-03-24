@@ -1,5 +1,6 @@
-import { openTabs, setCurrentTabId, tabId, currentTabId, getTabIndex, getTabIndexFromFileId, incrementTabId, files } from "./state.js"
+import { openTabs, setCurrentTabId, tabId, currentTabId, getTabIndex, getTabIndexFromFileId, incrementTabId, files, setSelectedFileId } from "./state.js"
 import { getFileIndex } from "./storage.js"
+import { highlightSelectedFile } from "./editor.js"
 
 const currentTabEl = document.getElementById('current-tab')
 const tabBar = document.getElementById('tab-bar')
@@ -20,6 +21,8 @@ function loadTab(id){
         createDefaultView()
     } else {
         const file = files[getFileIndex(fileId)]
+        setSelectedFileId(file.id)
+        highlightSelectedFile(file.id)
         createNoteView(file)
     }
 }
@@ -43,7 +46,8 @@ function deleteTab(id){
     renderTabs()
     if(openTabs.length < 1){
         currentTabEl.innerHTML = ''
-        setTimeout(createDefaultTab, 500)
+        createDefaultTab()
+        highlightSelectedFile(null)
         return
     }
     if(currentTabId === id && openTabs.length > 0){
