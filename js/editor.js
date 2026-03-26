@@ -61,6 +61,7 @@ export function createNewNote(){
     setSelectedFileId(id)
     setAppState('Editing')
     renderFiletree()
+    getTitleInput().focus()
     return id
 }
 

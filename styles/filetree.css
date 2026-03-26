@@ -1,8 +1,41 @@
-/* =====================
-   File Tree
-   ===================== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&display=swap');
+
+:root.dark {
+    --bg-primary: #0f0f0d;
+    --bg-secondary: #1a1a16;
+    --bg-tertiary: #222219;
+    --gold: #c9a84c;
+    --gold-subtle: rgba(201, 168, 76, 0.15);
+    --border-tertiary: rgba(201, 168, 76, 0.08);
+    --border-secondary: rgba(201, 168, 76, 0.14);
+    --border-default: rgba(201, 168, 76, 0.2);
+    --border-strong: rgba(201, 168, 76, 0.4);
+    --font-primary: #e8e2d4;
+    --font-secondary: #9a9488;
+    --font-tertiary: #5c5850;
+    --highlight: rgba(201, 168, 76, 0.2);
+    --caret: #c9a84c;
+}
+
+:root.light {
+    --bg-primary: #f5f0e8;
+    --bg-secondary: #ede8df;
+    --bg-tertiary: #e5dfd4;
+    --gold: #9a7a2e;
+    --gold-subtle: rgba(154, 122, 46, 0.12);
+    --border-tertiary: rgba(154, 122, 46, 0.1);
+    --border-secondary: rgba(154, 122, 46, 0.18);
+    --border-default: rgba(154, 122, 46, 0.28);
+    --border-strong: rgba(154, 122, 46, 0.5);
+    --font-primary: #1a1a16;
+    --font-secondary: #6b6560;
+    --font-tertiary: #a09890;
+    --highlight: rgba(154, 122, 46, 0.2);
+    --caret: #9a7a2e;
+}
+
 #filetree {
-    background-color: var(--secondary);
+    background-color: var(--bg-secondary);
     height: 100vh;
     width: 200px;
     transition: width 0.3s ease;
@@ -15,17 +48,18 @@
 
 #filetree-nav {
     width: 100%;
-    height: 50px;
+    height: 40px;
     margin: 0;
     padding: 5px;
-    background-color: var(--tertiary);
+    background-color: var(--bg-tertiary);
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 5px;
     list-style: none;
-    border-bottom: 1px solid var(--grey-accent);
+    border-bottom: 1px solid var(--border-secondary);
 }
+
 .filetree-nav-item {
     height: 80%;
     aspect-ratio: 1;
@@ -46,22 +80,22 @@
 }
 
 #files-container {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 40px);
     padding: 10px;
+    border-right: 1px solid var(--border-secondary);
+    overflow-y: auto;
 }
 
 .file-card {
     width: 100%;
     height: auto;
-    border-radius: 4px;
+    border-radius: 2px;
     cursor: pointer;
     user-select: none;
-    border: 2px var(--secondary);
 }
 
 .file-card:hover {
-    background-color: var(--hover);
-    border: 1px solid var(--accent);
+    background-color: var(--bg-tertiary);
 }
 
 .file-card.folder {}
@@ -73,9 +107,6 @@
     align-items: center;
     gap: 6px;
     padding: 0 4px;
-}
-
-.file-card-header * {
 }
 
 .file-card-img {
@@ -90,6 +121,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
+    color: var(--font-primary);
 }
 
 .folder-contents {
@@ -102,25 +134,28 @@
     display: flex;
 }
 
-.drag-over {
+.drag-over.file-card {
+    background-color: var(--bg-tertiary);
+    border-left: 2px solid var(--gold);
 }
 
-.temp {
-}
+.temp {}
 
 #temp-card-input {
     background: transparent;
     border: none;
-    border-bottom: 1px solid var(--accent);
+    border-bottom: 1px solid var(--gold);
     outline: none;
     font-size: 13px;
     width: 60%;
-    color: inherit;
+    color: var(--font-primary);
+    caret-color: var(--caret);
 }
 
 .right-click-menu {
-    background-color: var(--tertiary);
-    border-radius: 6px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
     padding: 4px;
     min-width: 120px;
     z-index: 100;
@@ -129,14 +164,20 @@
 .rc-menu-item {
     padding: 6px 10px;
     font-size: 13px;
-    border-radius: 4px;
+    border-radius: 2px;
     cursor: pointer;
+    color: var(--font-primary);
 }
 
 .rc-menu-item:hover {
-    background-color: var(--primary);
+    background-color: var(--bg-secondary);
 }
 
 #rc-delete-btn {
-    color: var(--danger);
+    color: #c0392b;
+}
+
+.selected-file {
+    background-color: var(--gold-subtle);
+    border-left: 2px solid var(--gold);
 }
