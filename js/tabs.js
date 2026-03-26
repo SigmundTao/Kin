@@ -16,7 +16,7 @@ export function createTab(fileId){
     renderTabs()
 }
 
-function loadTab(id){
+export function loadTab(id){
     const tabIndex = getTabIndex(id)
     if(tabIndex === -1) return
     const fileId = openTabs[tabIndex].file
@@ -112,7 +112,7 @@ export function openFile(fileId){
     }
 }
 
-function checkForDefaultTabs(){
+export function checkForDefaultTabs(){
     return openTabs.findIndex(t => t.file === null)
 }
 
@@ -257,7 +257,7 @@ function getCharacterCount(file){
     return file.body.split('').length
 }
 
-function overwriteDefaultTab(fileId){
+export function overwriteDefaultTab(fileId){
     const defaultTabIndex = getTabIndexFromFileId(null)
 
     openTabs[defaultTabIndex].file = fileId

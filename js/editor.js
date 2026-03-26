@@ -1,6 +1,6 @@
-import { files, getFileIndex, idNum, currentFolderId, incrementIdNum, setSelectedFileId, setAppState } from "./state.js"
+import { openTabs, files, getFileIndex, idNum, currentFolderId, incrementIdNum, setSelectedFileId, setAppState, getTabIndexFromFileId } from "./state.js"
 import { getFormattedDate, updateFileData, checkForDuplicateTitles } from "./storage.js"
-import { createTab, renderTabs } from "./tabs.js"
+import { renderTabs, checkForDefaultTabs, createTab, overwriteDefaultTab, loadTab } from "./tabs.js"
 import { renderFiletree } from "./filetree.js"
 
 const createNoteBtn = document.getElementById('create-note-btn')
@@ -49,7 +49,13 @@ export function createNewNote(){
         lastEdited: date,
         tags: []
     })
-    createTab(id)
+    if(checkForDefaultTabs() !== -1){
+        overwriteDefaultTab(id)
+        loadTab(openTabs[getTabIndexFromFileId(id)].id)
+        renderTabs()
+    } else {
+        createTab(id)
+    }
     incrementIdNum()
     updateFileData()
     setSelectedFileId(id)

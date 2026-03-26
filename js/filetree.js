@@ -247,7 +247,7 @@ export function deleteFile(id){
         setSelectedFileId(null)
         setAppState('Idle')
     }
-    if(checkIfTabExists(id) !== -1){
+    if(checkIfTabExists(id)){
         deleteTab(openTabs[getTabIndexFromFileId(id)].id)
     }
 }
@@ -269,7 +269,7 @@ fileTreeContainerEl.addEventListener('contextmenu', (event) => {
     const eventTarget = event.target
     const file = eventTarget.closest('.file-card')
     if(!file) return
-    
+
     document.querySelector('.right-click-menu')?.remove()
 
     const menu = createRightClickMenu(event.clientX, event.clientY, files[getFileIndex(Number(file.id))])
