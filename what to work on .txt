@@ -1,6 +1,8 @@
-26/3/26
-
-[x] Auto save on body input
-[x] Add markdown rendering
-[x] Add Word and character count
-[x] Add dragging notes out of folders
+[ ] Fix tab text wrap
+[ ] Make the transition between display and edit mode seamless
+[ ] Create quick capture feature
+[ ] Create settings menu
+[ ] Create keybinds for every function
+[ ] Create Light mode + 1 more theme
+[ ] Create Note Pinning
+[ ] Create a data visualization

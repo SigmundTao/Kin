@@ -138,13 +138,9 @@ function createDefaultView(){
     searchText.textContent = 'Press Alt + d to search for a file'
     searchText.classList.add('default-page-text')
 
-    const ginkgoTreeImg = document.createElement('div')
-    ginkgoTreeImg.classList.add('ginkgo-tree')
-
     defaultPage.appendChild(noteText)
     defaultPage.appendChild(folderText)
     defaultPage.appendChild(searchText)
-    defaultPage.appendChild(ginkgoTreeImg)
     currentTabEl.appendChild(defaultPage)
 }
 

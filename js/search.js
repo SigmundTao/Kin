@@ -1,5 +1,8 @@
-import { files } from './state.js'
-import { openFile } from './tabs.js'
+import { files, idNum, incrementIdNum, currentFolderId } from './state.js'
+import { openFile, renderTabs } from './tabs.js'
+import { createNewNote } from './editor.js'
+import { updateFileData, getFormattedDate } from './storage.js'
+import { renderFiletree } from './filetree.js'
 
 const searchMenu = document.getElementById('search-menu')
 const searchBarEl = document.getElementById('search-bar')
@@ -59,5 +62,51 @@ function createMenuItem(file){
 }
 
 function displaySearchResults(array, container){
-    array.forEach(item => container.appendChild(createMenuItem(item)))
+    if(array.length != 0){
+        array.forEach(item => container.appendChild(createMenuItem(item)))
+    } else {
+        console.log(array)
+        const newNoteCard = createNewNoteMenuItem()
+        newNoteCard.addEventListener('click', createNoteFromMenu)
+        container.appendChild(newNoteCard)
+    }
 }
+
+function createNoteFromMenu(){
+    const date = getFormattedDate(new Date())
+    const id = idNum
+    const title = searchBarEl.value.trim('')
+    files.push({
+        title: title,
+        body: '',
+        id,
+        type: 'note',
+        parentId: currentFolderId,
+        date,
+        lastEdited: date,
+        tags: []
+    })
+
+    updateFileData()
+    incrementIdNum()
+    openFile(id)
+    renderFiletree()
+    closeSearchMenu()
+}
+
+function createNewNoteMenuItem(){
+    const menuItem = document.createElement('div')
+    menuItem.classList.add('search-result')
+    menuItem.classList.add('new-note-card')
+    menuItem.innerHTML = `
+        <div>${searchBarEl.value}</div>
+        <div class="menu-create-note-btn">Create Note</div>
+    `
+    return menuItem
+}
+
+searchBarEl.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && document.querySelector('.new-note-card')){
+        createNoteFromMenu()
+    }
+})

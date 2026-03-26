@@ -34,6 +34,10 @@ input:focus {
 hr {
     width: 100%;
 }
+
+a {
+    color: var(--accent);
+}
 /* =====================
    Navigation
    ===================== */
@@ -245,6 +249,7 @@ hr {
     padding: 10px;
     border-bottom: green;
     font-size: 0.8rem;
+    overflow-x: hidden;
 }
 
 .tab-card:hover {cursor: pointer;}
@@ -465,4 +470,15 @@ hr {
 
 .note-mode-img.edit-mode {
     background-image: url('./assets/edit.svg');
+}
+
+.menu-create-note-btn {
+    color: var(--accent);
+    border: 1px solid var(--grey-accent);
+    height: 100%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
 }
