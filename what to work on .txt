@@ -1,13 +1,19 @@
 [ ] Fix tab text wrap
 [ ] Make the transition between display and edit mode seamless
-[ ] Create quick capture feature
-[ ] Create settings menu
-[ ] Create keybinds for every function
-[ ] Create Light mode + 1 more theme
-[ ] Create Note Pinning
-[ ] Create a data visualization
-[ ] Create progress bar md
-[ ] Create Warning block md
-[ ] Create color swatch md
-[ ] Create name tags md
+[ ] quick capture feature
+[ ] settings menu
+[ ] keybinds for every function
+[ ] Light mode + 1 more theme
+[ ] Note Pinning
+[ ] a data visualization
+[ ] progress bar md
+[ ] Warning block md
+[ ] color swatch md
+[ ] name tags md
 [ ] Create status badges md
+[ ] Back links md
+[ ] Centered text md
+[ ] Make checkboxes clickable
+[ ] Style code blocks and code snippets
+[ ] Improve right click menu
+[ ] Come up with and implement a way to vizualise data

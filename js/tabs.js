@@ -4,7 +4,7 @@ import { highlightSelectedFile, getTitleInput, getBodyInput, saveNote } from "./
 import { deleteFile } from "./filetree.js"
 import { marked } from './markdown.js'
 
-const currentTabEl = document.getElementById('current-tab')
+export const currentTabEl = document.getElementById('current-tab')
 const tabBar = document.getElementById('tab-bar')
 let noteDebounce
 
@@ -165,6 +165,7 @@ function createNoteView(file){
 
     const markdownDisplay = document.createElement('div');
     markdownDisplay.classList.add('note-body')
+    markdownDisplay.classList.add('markdown-display')
     markdownDisplay.id = 'markdown-div'
     markdownDisplay.addEventListener('click', () => { switchToEditMode(noteContentInput, markdownDisplay) })
 

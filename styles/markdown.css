@@ -1,3 +1,8 @@
+:root {
+    --block-color: #292929;
+    --block-padding: 5px;
+}
+
 .highlight-md {
     background-color: rgba(255, 255, 0, 0.3);
     color: inherit;
@@ -9,8 +14,30 @@
 .markdown-display h2 {}
 .markdown-display h3 {}
 .markdown-display p {}
-.markdown-display code {}          /* inline code */
-.markdown-display pre code {}      /* code blocks */
+
+.markdown-display pre {
+    background-color: var(--block-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.markdown-display pre code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--font-color);
+    background: none;
+    padding: 0;
+}
+
+.markdown-display code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    background-color: var(--block-color);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+    
 .markdown-display blockquote {}
 .markdown-display table {}
 .markdown-display a {}

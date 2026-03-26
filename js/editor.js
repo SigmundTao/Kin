@@ -58,7 +58,7 @@ export function createNewNote(){
     return id
 }
 
-function getUntitledTitle(){
+export function getUntitledTitle(){
     const untitledTitles = new Set(files.filter(f => f.title.startsWith('Untitled')).map(f => f.title))
     if(!untitledTitles.has('Untitled')) return 'Untitled'
     let i = 1

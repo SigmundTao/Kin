@@ -4,6 +4,7 @@ import { saveNote, createNewNote } from './editor.js'
 import { openSearchMenu } from './search.js'
 import { createFolder } from './filetree.js'
 import {createDefaultTab, getCountHolder, openFile, toggleNoteMode, updateCountHolder } from './tabs.js'
+import { createQuickCaputeEl } from './quickcapture.js'
 
 export function initShortcuts(){
     window.addEventListener('keydown', handleKeydown)
@@ -52,5 +53,8 @@ function handleKeydown(e){
         e.preventDefault()
         toggleNoteMode()
         updateCountHolder(getCountHolder(), files[getFileIndex(selectedFileId)], currentNoteMode)
+    } else if(e.altKey && e.key === 'q'){
+        e.preventDefault()
+        createQuickCaputeEl()
     }
 }
