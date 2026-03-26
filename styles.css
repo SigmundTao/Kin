@@ -402,3 +402,18 @@ input:focus {
     border: 1px solid var(--accent);
     background-color: var(--primary);
 }
+
+.count-holder {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: 1px solid var(--grey-accent);
+    height: 25px;
+    width: 200px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--secondary);
+    font-size: 0.75rem;
+    border-top-left-radius: var(--border-radius);
+}

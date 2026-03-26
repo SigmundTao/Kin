@@ -162,9 +162,14 @@ function createNoteView(file){
     noteContentInput.classList.add('note-body')
     noteContentInput.value = file.body
 
+    const countHolder = document.createElement('div')
+    countHolder.classList.add('count-holder')
+
     tab.appendChild(titleInput)
     tab.appendChild(noteContentInput)
+    tab.appendChild(countHolder)
     currentTabEl.appendChild(tab)
+    updateCountHolder(countHolder, file)
 
     titleInput.addEventListener('keydown', (e) => {
         if(e.key === 'Enter'){
@@ -178,8 +183,24 @@ function createNoteView(file){
 
         noteDebounce = setTimeout(() => {
             saveNote(file)
+            updateCountHolder(countHolder, file)
         }, 300);
     })
+
+}
+
+function updateCountHolder(holder, file){
+    holder.innerHTML = `
+        <div class="word-count">${getWordCount(file)} Words</div>
+        <div class="char-count">${getCharacterCount(file)} Characters</div>`
+}
+
+function getWordCount(file){
+    return file.body.split(' ').length
+}
+
+function getCharacterCount(file){
+    return file.body.split('').length
 }
 
 function overwriteDefaultTab(fileId){
