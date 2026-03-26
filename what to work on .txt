@@ -1,8 +1,6 @@
-[x] Stop folders from loading on click
-[x] Allow files to be stored within folders
-[X] Render files inside parent folders and make it collapsable
-[ ] create tab system
-[x] Put cursor at the end of text when focusing on the title input
-[x] Change cursor on right click menu
-[ ] Fix moving through files with arrow keys
-[x] create indentation for folder children
+26/3/26
+
+[x] Auto save on body input
+[ ] Add markdown rendering
+[ ] Add Word and character count
+[ ] Add dragging notes out of folders

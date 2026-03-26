@@ -1,10 +1,11 @@
 import { openTabs, setCurrentTabId, tabId, currentTabId, getTabIndex, getTabIndexFromFileId, incrementTabId, files, setSelectedFileId } from "./state.js"
 import { checkForDuplicateTitles, getFileIndex } from "./storage.js"
-import { highlightSelectedFile, getTitleInput, getBodyInput } from "./editor.js"
+import { highlightSelectedFile, getTitleInput, getBodyInput, saveNote } from "./editor.js"
 import { deleteFile } from "./filetree.js"
 
 const currentTabEl = document.getElementById('current-tab')
 const tabBar = document.getElementById('tab-bar')
+let noteDebounce
 
 export function createTab(fileId){
     openTabs.push({file: fileId, id: tabId})
@@ -164,6 +165,21 @@ function createNoteView(file){
     tab.appendChild(titleInput)
     tab.appendChild(noteContentInput)
     currentTabEl.appendChild(tab)
+
+    titleInput.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter'){
+            saveNote(file)
+            noteContentInput.focus()
+        }
+    })
+
+    noteContentInput.addEventListener('input', () => {
+        clearTimeout(noteDebounce)
+
+        noteDebounce = setTimeout(() => {
+            saveNote(file)
+        }, 300);
+    })
 }
 
 function overwriteDefaultTab(fileId){
