@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&display=swap');
 
-:root.dark {
+:root.sumi-dark {
     --bg-primary: #0f0f0d;
     --bg-secondary: #1a1a16;
     --bg-tertiary: #222219;
@@ -17,7 +17,7 @@
     --caret: #c9a84c;
 }
 
-:root.light {
+:root.sumi {
     --bg-primary: #f5f0e8;
     --bg-secondary: #ede8df;
     --bg-tertiary: #e5dfd4;
@@ -117,23 +117,6 @@
     --font-tertiary: #3a4450;
     --highlight: rgba(168, 184, 200, 0.15);
     --caret: #a8b8c8;
-}
-
-:root.obon {
-    --bg-primary: #080a14;
-    --bg-secondary: #0e1220;
-    --bg-tertiary: #141a2c;
-    --gold: #e8a030;
-    --gold-subtle: rgba(232, 160, 48, 0.12);
-    --border-tertiary: rgba(232, 160, 48, 0.08);
-    --border-secondary: rgba(232, 160, 48, 0.14);
-    --border-default: rgba(232, 160, 48, 0.24);
-    --border-strong: rgba(232, 160, 48, 0.5);
-    --font-primary: #f0e4cc;
-    --font-secondary: #9a8060;
-    --font-tertiary: #5a4830;
-    --highlight: rgba(232, 160, 48, 0.18);
-    --caret: #e8a030;
 }
 
 :root.murasaki {
@@ -593,4 +576,15 @@ a {
     width: 100%;
     caret-color: var(--caret);
     font-family: 'Noto Serif JP', serif;
+}
+
+#settings {
+    height: 500px;
+    width: 600px;
+}
+
+#settings-btn {
+    background-image: url('../assets/settings.svg');
+    background-position: center;
+    background-size: contain;
 }

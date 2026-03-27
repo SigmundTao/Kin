@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="hanako">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,7 @@
     <main id="page">
         <ul id="nav-bar">
             <li id="open-files-btn" class="nav-item"></li>
+            <li id="settings-btn" class="nav-item"></li>
         </ul>
         <div id="filetree">
             <ul id="filetree-nav">
@@ -32,6 +33,20 @@
             <input type="text" id="search-bar">
             <div id="search-results"></div>
         </div>
+    </dialog>
+    <dialog id="settings">
+        <button id="close-settings-btn">X</button>
+        <select name="" id="theme-select">
+            <option value="sumi-dark">Sumi Dark</option>
+            <option value="sumi-light">Sumi Light</option>
+            <option value="sakura">Sakura</option>
+            <option value="hanako">Hanako</option>
+            <option value="katana">Katana</option>
+            <option value="matcha">Matcha</option>
+            <option value="yuki">Yuki</option>
+            <option value="koi">Koi</option>
+            <option value="murasaki">Murasaki</option>
+        </select>
     </dialog>
 
     <script type="module" src="js/main.js" ></script>
