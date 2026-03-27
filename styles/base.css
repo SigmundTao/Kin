@@ -459,9 +459,12 @@ a {
     height: 100%;
     width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     position: relative;
     overflow-y: scroll;
+    padding-top: 40px;
 }
 
 .note-title {
@@ -470,10 +473,10 @@ a {
     color: var(--font-primary);
     font-size: 1.5rem;
     padding-left: 50px;
-    padding-top: 10px;
     border: none;
     font-family: 'Noto Serif JP', serif;
     caret-color: var(--caret);
+    width: 900px;
 }
 
 .note-body {
@@ -488,6 +491,7 @@ a {
     caret-color: var(--caret);
     line-height: 1.8;
     resize: none;
+    width: 900px;
 }
 
 .note-body:focus {
@@ -579,8 +583,11 @@ a {
 }
 
 #settings {
-    height: 500px;
+    height: 800px;
     width: 600px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-default);
+    color: var(--font-primary);
 }
 
 #settings-btn {
