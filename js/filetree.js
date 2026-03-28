@@ -237,7 +237,13 @@ function createRightClickMenu(posX, posY, file){
     const menu = document.createElement('div')
     menu.classList.add('right-click-menu')
     menu.appendChild(createDeleteBtn(file.id, menu))
-    menu.append(createPinBtn(file, menu))
+    if(file.parentId){
+        if(files[getFileIndex(file.parentId)].pinned){
+
+        }
+    } else {
+        menu.append(createPinBtn(file, menu))
+    }
 
     if(file.type === 'note'){
         const menuEditBtn = document.createElement('div')

@@ -1,10 +1,177 @@
-:root {
-    --block-color: #292929;
-    --block-padding: 5px;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&display=swap');
+
+:root.sumi-dark {
+    --bg-primary: #0f0f0d;
+    --bg-secondary: #1a1a16;
+    --bg-tertiary: #222219;
+    --gold: #c9a84c;
+    --gold-subtle: rgba(201, 168, 76, 0.15);
+    --border-tertiary: rgba(201, 168, 76, 0.08);
+    --border-secondary: rgba(201, 168, 76, 0.14);
+    --border-default: rgba(201, 168, 76, 0.2);
+    --border-strong: rgba(201, 168, 76, 0.4);
+    --font-primary: #e8e2d4;
+    --font-secondary: #9a9488;
+    --font-tertiary: #5c5850;
+    --highlight: rgba(201, 168, 76, 0.2);
+    --caret: #c9a84c;
+}
+
+:root.sumi-light {
+    --bg-primary: #f5f0e8;
+    --bg-secondary: #ede8df;
+    --bg-tertiary: #e5dfd4;
+    --gold: #9a7a2e;
+    --gold-subtle: rgba(154, 122, 46, 0.12);
+    --border-tertiary: rgba(154, 122, 46, 0.1);
+    --border-secondary: rgba(154, 122, 46, 0.18);
+    --border-default: rgba(154, 122, 46, 0.28);
+    --border-strong: rgba(154, 122, 46, 0.5);
+    --font-primary: #1a1a16;
+    --font-secondary: #6b6560;
+    --font-tertiary: #a09890;
+    --highlight: rgba(154, 122, 46, 0.2);
+    --caret: #9a7a2e;
+}
+
+:root.sakura {
+    --bg-primary: #fdf0eb;
+    --bg-secondary: #f7e2da;
+    --bg-tertiary: #efd4cc;
+    --gold: #c4614d;
+    --gold-subtle: rgba(196, 97, 77, 0.14);
+    --border-tertiary: rgba(196, 97, 77, 0.1);
+    --border-secondary: rgba(196, 97, 77, 0.18);
+    --border-default: rgba(196, 97, 77, 0.3);
+    --border-strong: rgba(196, 97, 77, 0.55);
+    --font-primary: #2d1f1a;
+    --font-secondary: #8a6560;
+    --font-tertiary: #b89a96;
+    --highlight: rgba(196, 97, 77, 0.2);
+    --caret: #c4614d;
+}
+
+:root.matcha {
+    --bg-primary: #1a1f1a;
+    --bg-secondary: #1f261f;
+    --bg-tertiary: #252d25;
+    --gold: #7a9e6e;
+    --gold-subtle: rgba(122, 158, 110, 0.12);
+    --border-tertiary: rgba(122, 158, 110, 0.08);
+    --border-secondary: rgba(122, 158, 110, 0.14);
+    --border-default: rgba(122, 158, 110, 0.25);
+    --border-strong: rgba(122, 158, 110, 0.5);
+    --font-primary: #e8e4d9;
+    --font-secondary: #8a9a84;
+    --font-tertiary: #556050;
+    --highlight: rgba(122, 158, 110, 0.2);
+    --caret: #7a9e6e;
+}
+
+:root.yuki {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #eef3f8;
+    --bg-tertiary: #e2ecf4;
+    --gold: #5a86a8;
+    --gold-subtle: rgba(90, 134, 168, 0.12);
+    --border-tertiary: rgba(90, 134, 168, 0.1);
+    --border-secondary: rgba(90, 134, 168, 0.18);
+    --border-default: rgba(90, 134, 168, 0.3);
+    --border-strong: rgba(90, 134, 168, 0.55);
+    --font-primary: #1a2430;
+    --font-secondary: #4a6878;
+    --font-tertiary: #8aaabb;
+    --highlight: rgba(90, 134, 168, 0.18);
+    --caret: #5a86a8;
+}
+
+:root.koi {
+    --bg-primary: #0d0f0f;
+    --bg-secondary: #131818;
+    --bg-tertiary: #1a2020;
+    --gold: #e8602a;
+    --gold-subtle: rgba(232, 96, 42, 0.12);
+    --border-tertiary: rgba(232, 96, 42, 0.08);
+    --border-secondary: rgba(232, 96, 42, 0.14);
+    --border-default: rgba(232, 96, 42, 0.25);
+    --border-strong: rgba(232, 96, 42, 0.5);
+    --font-primary: #f0ece4;
+    --font-secondary: #8a7a6a;
+    --font-tertiary: #4a3a2a;
+    --highlight: rgba(232, 96, 42, 0.18);
+    --caret: #e8602a;
+}
+
+:root.katana {
+    --bg-primary: #0c0d10;
+    --bg-secondary: #12141a;
+    --bg-tertiary: #1a1d26;
+    --gold: #a8b8c8;
+    --gold-subtle: rgba(168, 184, 200, 0.1);
+    --border-tertiary: rgba(168, 184, 200, 0.08);
+    --border-secondary: rgba(168, 184, 200, 0.15);
+    --border-default: rgba(168, 184, 200, 0.28);
+    --border-strong: rgba(168, 184, 200, 0.55);
+    --font-primary: #dce4ec;
+    --font-secondary: #7a8a98;
+    --font-tertiary: #3a4450;
+    --highlight: rgba(168, 184, 200, 0.15);
+    --caret: #a8b8c8;
+}
+
+:root.obon {
+    --bg-primary: #080a14;
+    --bg-secondary: #0e1220;
+    --bg-tertiary: #141a2c;
+    --gold: #e8a030;
+    --gold-subtle: rgba(232, 160, 48, 0.12);
+    --border-tertiary: rgba(232, 160, 48, 0.08);
+    --border-secondary: rgba(232, 160, 48, 0.14);
+    --border-default: rgba(232, 160, 48, 0.24);
+    --border-strong: rgba(232, 160, 48, 0.5);
+    --font-primary: #f0e4cc;
+    --font-secondary: #9a8060;
+    --font-tertiary: #5a4830;
+    --highlight: rgba(232, 160, 48, 0.18);
+    --caret: #e8a030;
+}
+
+:root.murasaki {
+    --bg-primary: #0a080f;
+    --bg-secondary: #100e18;
+    --bg-tertiary: #181422;
+    --gold: #9a70c8;
+    --gold-subtle: rgba(154, 112, 200, 0.12);
+    --border-tertiary: rgba(154, 112, 200, 0.08);
+    --border-secondary: rgba(154, 112, 200, 0.15);
+    --border-default: rgba(154, 112, 200, 0.26);
+    --border-strong: rgba(154, 112, 200, 0.52);
+    --font-primary: #e8e0f0;
+    --font-secondary: #8a70a8;
+    --font-tertiary: #4a3860;
+    --highlight: rgba(154, 112, 200, 0.18);
+    --caret: #9a70c8;
+}
+
+:root.hanako {
+    --bg-primary: #f7f5f2;
+    --bg-secondary: #eeece8;
+    --bg-tertiary: #e4e0da;
+    --gold: #c8200a;
+    --gold-subtle: rgba(200, 32, 10, 0.08);
+    --border-tertiary: rgba(0, 0, 0, 0.06);
+    --border-secondary: rgba(0, 0, 0, 0.12);
+    --border-default: rgba(0, 0, 0, 0.2);
+    --border-strong: rgba(200, 32, 10, 0.6);
+    --font-primary: #0a0a08;
+    --font-secondary: #4a4a48;
+    --font-tertiary: #9a9a98;
+    --highlight: rgba(200, 32, 10, 0.12);
+    --caret: #c8200a;
 }
 
 .highlight-md {
-    background-color: rgba(255, 255, 0, 0.3);
+    background-color: var(--highlight);
     color: inherit;
     border-radius: 2px;
     padding: 0 2px;
@@ -48,3 +215,10 @@
 }
 .markdown-display hr {}
 .markdown-display img {}
+
+.md-tag {
+    background-color: var(--gold);
+    padding: 4px;
+    border-radius: var(--border-radius);
+    color: var(--font-primary);
+}

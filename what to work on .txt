@@ -1,10 +1,10 @@
 [ ] Fix tab text wrap
 [ ] Make the transition between display and edit mode seamless
-[ ] quick capture feature
-[ ] settings menu
+[x] quick capture feature
+[x] settings menu
 [ ] keybinds for every function
-[ ] Light mode + 1 more theme
-[ ] Note Pinning
+[x] Light mode + 1 more theme
+[x] Note Pinning
 [ ] a data visualization
 [ ] progress bar md
 [ ] Warning block md
