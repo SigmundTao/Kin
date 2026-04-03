@@ -61,10 +61,23 @@ const importantLabel = {
     }
 }
 
+const colorSwash = {
+    name: 'colorSwash',
+    level: 'inline',
+    start(src){ return src.indexOf('(#') },
+    tokenizer(src){
+        const match = src.match(/^\(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})\)/)
+        if(match) return { type: 'colorSwash', raw: match[0], color: match[1] }
+    },
+    renderer(token){
+        return `<span class="color-swash" style="background-color: #${token.color};"></span>`
+    }
+}
+
 marked.use({
     mangle: false,
     headerIds: false,
-    extensions: [tagExtension, progressBar, highlightExtension, importantLabel]
+    extensions: [tagExtension, progressBar, highlightExtension, importantLabel, colorSwash]
 })
 
 export { marked }

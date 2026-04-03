@@ -6,9 +6,9 @@
 [x] Light mode + 1 more theme
 [x] Note Pinning
 [ ] a data visualization
-[ ] progress bar md
+[x] progress bar md
 [ ] Warning block md
-[ ] color swatch md
+[x] color swatch md
 [ ] name tags md
 [ ] Create status badges md
 [ ] Back links md
@@ -18,3 +18,8 @@
 [ ] Improve right click menu
 [ ] Come up with and implement a way to vizualise data
 [ ] Ginkgo tree graph view
+[ ] Custom themes
+[ ] Draw block
+[ ] Reminders
+[ ] Pomodoro timer
+[ ] Inline markdown
