@@ -185,9 +185,10 @@
 .markdown-display pre {
     background-color: var(--bg-secondary);
     border-radius: var(--border-radius);
-    padding: 1rem;
-    min-height: 40px;
-    overflow: hidden;
+    padding: 20px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
 }
 
 .markdown-display pre code {
@@ -195,7 +196,6 @@
     font-size: 0.875rem;
     color: var(--font-color);
     background: none;
-    padding: 0;
 }
 
 .markdown-display code {
@@ -283,4 +283,38 @@
     height: 20px;
     vertical-align: middle;
     border: 2px solid darkgray;
+}
+
+.name-tag {
+    color: var(--gold);
+    font-weight: bold;
+}
+
+.name-tag:hover {
+    text-decoration: underline;
+}
+
+.current-date-md {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--bg-secondary);
+    color: var(--font-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+.current-date-img {
+    background-image: url('../assets/date-icon.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 13px;
+    width: 13px;
+    opacity: 0.6;
+    flex-shrink: 0;
 }

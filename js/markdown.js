@@ -1,4 +1,5 @@
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/+esm'
+import { getFormattedDate } from './storage.js'
 
 const highlightExtension = {
     name: 'highlight',
@@ -74,10 +75,52 @@ const colorSwash = {
     }
 }
 
+const nameTag = {
+    name: 'nameTag',
+    level: 'inline',
+    start(src){ return src.indexOf('@') },
+    tokenizer(src){
+        const match = src.match(/^@([a-zA-Z][a-zA-Z0-9_-]*)/)
+        if(match) return {
+            type: 'nameTag',
+            raw: match[0],
+            name: match[1]
+        }
+    },
+    renderer(token){
+        return `<span class="name-tag">@${token.name}</span>`
+    }
+}
+
+const currentDate = {
+    name: 'currentDate',
+    level: 'inline',
+    start(src){ return src.indexOf('{{') },
+    tokenizer(src){
+        const match = src.match(/^{{date}}/)
+        if(match){
+            const curDate = getFormattedDate(new Date())
+            return {
+                type: 'currentDate',
+                raw: match[0],
+                date: curDate
+            }
+        }
+    },
+    renderer(token){
+        return `
+            <span class="current-date-md">
+                <span class="current-date-img"></span>
+                <span>${token.date}</span>
+            </span>
+        `
+    }
+}
+
 marked.use({
     mangle: false,
     headerIds: false,
-    extensions: [tagExtension, progressBar, highlightExtension, importantLabel, colorSwash]
+    extensions: [tagExtension, progressBar, highlightExtension, importantLabel, colorSwash, nameTag, currentDate]
 })
 
 export { marked }
