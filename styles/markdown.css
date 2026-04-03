@@ -222,3 +222,31 @@
     border-radius: var(--border-radius);
     color: var(--font-primary);
 }
+
+.progress-bar-container {
+    width: 100%;
+    min-height: 25px;
+    background-color: white;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    margin: 5px;
+}
+
+.progress-bar-fill {
+    height: inherit;
+    background-color: green;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 0;
+}
+
+.progress-bar-label {
+    position: absolute;
+    left: 5px;
+    top: calc(50% - 15px);
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+}

@@ -222,8 +222,16 @@ function switchToDisplayMode(bodyInput, markdownDiv){
     bodyInput.style.display = 'none'
     markdownDiv.style.display = 'flex'
     setCurrentNoteMode('display')
+    setTimeout(() => {
+    const bars = document.querySelectorAll('.progress-bar-fill')
+    console.log('bars found:', bars.length)
+    bars.forEach(bar => {
+        console.log('data-value:', bar.dataset.value)
+        bar.style.width = bar.dataset.value + '%'
+        console.log('style after:', bar.style.width)
+    })
+}, 0)
 }
-
 function switchToEditMode(bodyInput, markdownDiv){
     markdownDiv.style.display = 'none'
     bodyInput.style.display = 'flex'

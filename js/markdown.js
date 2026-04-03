@@ -24,7 +24,34 @@ const tagExtension = {
     }
 }
 
-marked.use({ extensions: [tagExtension] })
-marked.use({ extensions: [highlightExtension] })
+const progressBar = {
+    name: 'progressBar',
+    level: 'block',
+    start(src){ return src.indexOf(':::[') },
+    tokenizer(src){
+        const match = src.match(/^:::\[(\d+)\]/)
+        if(match){
+            return {
+                type: 'progressBar',
+                raw: match[0],
+                value: Math.min(100, Math.max(0, Number(match[1])))
+            }
+        }
+    },
+    renderer(token){
+        return `
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" data-value="${token.value}"></div>
+                <span class="progress-bar-label">${token.value}%</span>
+            </div>
+        `
+    }
+}
+
+marked.use({
+    mangle: false,
+    headerIds: false,
+    extensions: [tagExtension, progressBar, highlightExtension]
+})
 
 export { marked }
