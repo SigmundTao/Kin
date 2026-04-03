@@ -183,10 +183,11 @@
 .markdown-display p {}
 
 .markdown-display pre {
-    background-color: var(--block-color);
+    background-color: var(--bg-secondary);
     border-radius: var(--border-radius);
     padding: 1rem;
-    overflow-x: auto;
+    min-height: 40px;
+    overflow: hidden;
 }
 
 .markdown-display pre code {
@@ -200,13 +201,25 @@
 .markdown-display code {
     font-family: var(--font-mono);
     font-size: 0.875rem;
-    background-color: var(--block-color);
+    background-color: var(--bg-secondary);
     padding: 2px 5px;
     border-radius: 3px;
 }
     
 .markdown-display blockquote {}
-.markdown-display table {}
+.markdown-display table {
+    border: 1px solid var(--border-strong);
+}
+
+.markdown-display table th {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-secondary);
+}
+
+.markdown-display table * {
+    border: 1px solid var(--border-secondary);
+}
+
 .markdown-display a {}
 .markdown-display ul {}
 .markdown-display ol {}
@@ -226,7 +239,7 @@
 .progress-bar-container {
     width: 100%;
     min-height: 25px;
-    background-color: white;
+    background-color: var(--gold-subtle);
     border-radius: 4px;
     position: relative;
     overflow: hidden;
@@ -236,7 +249,7 @@
 
 .progress-bar-fill {
     height: inherit;
-    background-color: green;
+    background-color: var(--gold);
     border-radius: 4px;
     transition: width 0.3s ease;
     width: 0;
@@ -248,5 +261,18 @@
     top: calc(50% - 15px);
     font-size: 15px;
     font-weight: bold;
-    color: black;
+    color: var(--font-tertiary);
+}
+
+.important-label {
+    height: 16px;
+    width: 16px;
+    aspect-ratio: 1;
+    background-color: var(--gold);
+    background-image: url(../assets/important.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
 }

@@ -48,10 +48,23 @@ const progressBar = {
     }
 }
 
+const importantLabel = {
+    name: 'importantLabel',
+    level: 'inline',
+    start(src){ return src.indexOf('[!]') },
+    tokenizer(src){
+        const match = src.match(/^\[!\]/)
+        if(match) return { type: 'importantLabel', raw: match[0] }
+    },
+    renderer(token){
+        return `<span class="important-label"></span>`
+    }
+}
+
 marked.use({
     mangle: false,
     headerIds: false,
-    extensions: [tagExtension, progressBar, highlightExtension]
+    extensions: [tagExtension, progressBar, highlightExtension, importantLabel]
 })
 
 export { marked }
