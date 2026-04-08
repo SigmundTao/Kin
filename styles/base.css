@@ -217,6 +217,13 @@ a {
     background-repeat: no-repeat;
 }
 
+#visualizer-btn {
+    background-image: url('../assets/visualizer.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 /* =====================
    File Display
    ===================== */

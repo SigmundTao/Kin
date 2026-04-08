@@ -1,6 +1,0 @@
-1. Scrap paper - a quick on hand note for ideas that you dont want to save but have access to
-2. Quick capture - a input opens and allows you to jot an idea without moving away from your current note
-3. split view - work on two notes at once, vertically or horizontally
-4. backlinks
-5. note locking - stop user from accidentally editing a note
-6. themes

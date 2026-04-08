@@ -3,10 +3,14 @@ import { checkForDuplicateTitles, getFileIndex } from "./storage.js"
 import { highlightSelectedFile, getTitleInput, getBodyInput, saveNote } from "./editor.js"
 import { deleteFile } from "./filetree.js"
 import { marked } from './markdown.js'
+import { openVisualizerTab } from "./visualizer.js"
 
 export const currentTabEl = document.getElementById('current-tab')
 const tabBar = document.getElementById('tab-bar')
+const visualizerBtn = document.getElementById('visualizer-btn')
 let noteDebounce
+
+visualizerBtn.addEventListener('click', () => openVisualizerTab());
 
 export function createTab(fileId){
     openTabs.push({file: fileId, id: tabId})
