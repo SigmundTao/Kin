@@ -257,7 +257,7 @@ export function getCountHolder(){
     return document.querySelector('.count-holder')
 }
 
-function getWordCount(file){
+export function getWordCount(file){
     return file.body.split(' ').length
 }
 
